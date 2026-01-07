@@ -43,3 +43,5 @@ docker-compose exec php php artisan migrate
 　・サーバー名：mysql  
 　・ユーザー名：laravel_user  
 　・パスワード：laravel_pass  
+## ER図  
+![ER図](./er-diagram.png)
