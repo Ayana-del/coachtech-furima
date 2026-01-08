@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+// プロフィール編集画面
+Route::get('/mypage/profile', [ProfileController::class, 'edit'])
+    ->middleware(['auth', 'verified'])
+    ->name('profile.edit');

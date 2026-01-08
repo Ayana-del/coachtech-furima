@@ -45,12 +45,12 @@ cp src/.env.example src/.env
 docker-compose exec php php artisan key:generate
 ```
 
-### 5.マイグレーションの実行  
+### 5.マイグレーションの実行
 
 ```bash
-docker-compose exec php php artisan migrate  
+docker-compose exec php php artisan migrate
 ```
-
+  
 ## URL(開発環境)  
 ・アプリケーション本体: http://localhost  
 ・phpMyAdmin (DB 管理): http://localhost:8080  

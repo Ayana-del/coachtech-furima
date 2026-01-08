@@ -1,5 +1,7 @@
-@extends('layouts.app') @section('css')
-<link rel="stylesheet" href="{{ asset('css/auth.css') }}"> @endsection
+@extends('layouts.common')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/auth/register.css') }}"> @endsection
 
 @section('content')
 <div class="auth__content">
@@ -7,7 +9,7 @@
         <h2>会員登録</h2>
     </div>
 
-    <form class="form" action="{{ route('register') }}" method="post">
+    <form class="form" action="{{ route('register') }}" method="post" novalidate>
         @csrf
         <div class="form__group">
             <div class="form__group-title">
@@ -51,7 +53,9 @@
                 </div>
                 <div class="form__error">
                     @error('password')
+                    @if(str_contains($message, '一致') === false)
                     {{ $message }}
+                    @endif
                     @enderror
                 </div>
             </div>
@@ -66,6 +70,11 @@
                     <input type="password" name="password_confirmation">
                 </div>
                 <div class="form__error">
+                    @error('password')
+                        @if(str_contains($message, '一致'))
+                        {{ $message }}
+                        @endif
+                    @enderror
                 </div>
             </div>
         </div>
