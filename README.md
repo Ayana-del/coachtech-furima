@@ -1,20 +1,22 @@
 # coachtech-furima
 
-coachtech フリマアプリの開発プロジェクトです。
+coachtech フリマアプリの開発プロジェクトです。  
 
-## アプリケーションの概要
+## アプリケーションの概要  
 
-本アプリケーションは、ユーザーが商品を自ら出品・購入できるフリマプラットフォームです。
+本アプリケーションは、ユーザーが商品を自ら出品・購入できるフリマプラットフォームです。  
 
-## 使用技術（実行環境）
-
+## 使用技術（実行環境）  
 ・Backend: PHP 8.1/ Laravel 8.x  
 ・Frontend: Blade / CSS  
 ・nfrastructure: Docker / Docker Compose  
 ・Web Server: Nginx 1.21.1  
 ・Database: MySQL 8.0.35  
 ・Tool: phpMyAdmin / MailHog
-
+・Laravel Fortify  
+・Blade  
+・CSS  
+  
 ## 環境構築手順
 
 クローン後、以下の手順で開発環境を起動できます。
@@ -109,3 +111,17 @@ Eloquent モデルにおける主要なリレーションシップを以下に�
 ・belongsTo(user):誰が購入したか  
 ・belongsTo(Item):どの商品を購入したか  
 
+## 会員登録・メール認証機能の実装  
+### 1.実装済み機能  
+・ユーザー登録：ユーザー名、メールアドレス、パスワードによる新規アカウント作成。  
+・バリデーション：FormRequestを使用したサーバーサイドでの入力チェック。  
+・メール認証：新規登録時の本人確認メール送信機能追加（Laravel標準ベース）。  
+・レスポンシブ・デザイン：PC(1400px - 1540px)とタブレット(768px - 850px)に対応。  
+### 2.実装ファイル一覧  
+| ファイルパス | 役割・実装内容 |  
+| ---- | ---- |  
+| app/Http/Requests/RegisterRequest.php | バリデーション定義ルール・メッセージ定義 |  
+| resources/views/auth/register.blade.php | 会員登録画面 |  
+| public/css/auth/register.css | 会員登録画面専用スタイル |  
+### 3.ユーザー登録・遷移フロー  
+・登録後の自動遷移: 会員登録成功後、スムーズにプロフィール設定（マイページ）へ誘導するため、Fortifyの設定により遷移先を /mypage/profile にカスタマイズ済みです。  

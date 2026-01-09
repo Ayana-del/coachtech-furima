@@ -77,12 +77,24 @@
     text-decoration: underline;
     opacity: 0.9;
 }
-/* エラーメッセージの文字色を赤にする */
 .form__error {
     color: #ff4b4b;
-    /* 赤色 */
     font-size: 14px;
     margin-top: 4px;
-    /* もし文字が細いと感じる場合は追加 */
     font-weight: bold;
+}
+/* --- タブレットサイズ (768-850px) --- */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .register-container {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+/* --- PCサイズ (1400-1540px) --- */
+@media screen and (min-width: 1400px) {
+    .register-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
 }
