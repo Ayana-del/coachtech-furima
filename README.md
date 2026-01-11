@@ -1,22 +1,23 @@
 # coachtech-furima
 
-coachtech フリマアプリの開発プロジェクトです。  
+coachtech フリマアプリの開発プロジェクトです。
 
-## アプリケーションの概要  
+## アプリケーションの概要
 
-本アプリケーションは、ユーザーが商品を自ら出品・購入できるフリマプラットフォームです。  
+本アプリケーションは、ユーザーが商品を自ら出品・購入できるフリマプラットフォームです。
 
-## 使用技術（実行環境）  
+## 使用技術（実行環境）
+
 ・Backend: PHP 8.1/ Laravel 8.x  
 ・Frontend: Blade / CSS  
 ・nfrastructure: Docker / Docker Compose  
 ・Web Server: Nginx 1.21.1  
 ・Database: MySQL 8.0.35  
-・Tool: phpMyAdmin / MailHog
+・Tool: phpMyAdmin / MailHog  
 ・Laravel Fortify  
 ・Blade  
-・CSS  
-  
+・CSS
+
 ## 環境構築手順
 
 クローン後、以下の手順で開発環境を起動できます。
@@ -52,18 +53,21 @@ docker-compose exec php php artisan key:generate
 ```bash
 docker-compose exec php php artisan migrate
 ```
-  
-## URL(開発環境)  
+
+## URL(開発環境)
+
 ・アプリケーション本体: http://localhost  
 ・phpMyAdmin (DB 管理): http://localhost:8080  
 　・サーバー名：mysql  
 　・ユーザー名：laravel_user  
 　・パスワード：laravel_pass
 
-## ER 図  
-![ER図](./er-diagram.png)  
+## ER 図
 
-## データベース設計　  
+![ER図](./er-diagram.png)
+
+## データベース設計　
+
 本プロジェクトは、機能要件に基づき、９つのテーブルで構成されています。  
 | テーブル名 | 役割 | 関連する機能要件 |  
 | ---- | ---- | ---- |  
@@ -73,55 +77,70 @@ docker-compose exec php php artisan migrate
 | categories | 商品カテゴリ名 | US009 (FN028) |  
 | category_item | 商品とカテゴリの中間テーブル | US009 (FN028: 複数選択) |  
 | comments | 商品へのコメント保存 | US005 (FN020) |  
-| Like | 商品への「いいね」保存 | US005 (FN018) |  
+| likes | 商品への「いいね」保存 | US005 (FN018) |  
 | orders | 商品の購入確定情報・配送先 | US006 (FN022, FN024) |
 
-## モデル・リレーション定義  
-Eloquent モデルにおける主要なリレーションシップを以下に定義しています。  
-### User　モデル  
-・hasOne(Profile):1つのプロフィールを持つ  
+## モデル・リレーション定義
+
+Eloquent モデルにおける主要なリレーションシップを以下に定義しています。
+
+### User 　モデル
+
+・hasOne(Profile):1 つのプロフィールを持つ  
 ・hasMany(Item):複数の商品を出品する  
 ・hasMany(Comment):複数のコメントを投稿する  
 ・hasMany(Like):複数のいいねを行う  
 ・belongsToMany(Item,Like):マイリスト表示用。いいねした全商品を取得  
-・hasMany(Order):複数の注文履歴を持つ。  
-  
-### Profile モデル  
-・belongTo(User):特定のユーザーに属する  
-  
-### Item モデル  
+・hasMany(Order):複数の注文履歴を持つ。
+
+### Profile モデル
+
+・belongTo(User):特定のユーザーに属する
+
+### Item モデル
+
 ・belongsTo(User):特定のユーザーによって出品される  
 ・belongsToMany(Category):複数のカテゴリに属する(中間テーブルを経由)  
 ・hasMany(Comment):複数のコメントを持つ  
 ・hasMany(Like):複数のいいねを持つ  
-・hasOne(Order):一つの注文によって購入される(購入済み判定用)  
-  
-### Category モデル  
-・belongsToMAny(Item):複数の商品に紐づく  
-  
-### Comment モデル  
-・belongsTo(User):誰がコメントをしたか  
-・belongsTo(Item):どの商品へのコメントか  
-  
-### Like モデル  
-・belongsTo(User):誰が「いいね」したか  
-・belongsTo(Item):どの商品へのコメントか  
-  
-### Order モデル  
-・belongsTo(user):誰が購入したか  
-・belongsTo(Item):どの商品を購入したか  
+・hasOne(Order):一つの注文によって購入される(購入済み判定用)
 
-## 会員登録・メール認証機能の実装  
-### 1.実装済み機能  
+### Category モデル
+
+・belongsToMAny(Item):複数の商品に紐づく
+
+### Comment モデル
+
+・belongsTo(User):誰がコメントをしたか  
+・belongsTo(Item):どの商品へのコメントか
+
+### Like モデル
+
+・belongsTo(User):誰が「いいね」したか  
+・belongsTo(Item):どの商品へのコメントか
+
+### Order モデル
+
+・belongsTo(user):誰が購入したか  
+・belongsTo(Item):どの商品を購入したか
+
+## 会員登録・メール認証機能の実装
+
+### 1.実装済み機能
+
 ・ユーザー登録：ユーザー名、メールアドレス、パスワードによる新規アカウント作成。  
-・バリデーション：FormRequestを使用したサーバーサイドでの入力チェック。  
-・メール認証：新規登録時の本人確認メール送信機能追加（Laravel標準ベース）。  
-・レスポンシブ・デザイン：PC(1400px - 1540px)とタブレット(768px - 850px)に対応。  
-### 2.実装ファイル一覧  
-| ファイルパス | 役割・実装内容 |  
-| ---- | ---- |  
-| app/Http/Requests/RegisterRequest.php | バリデーション定義ルール・メッセージ定義 |  
-| resources/views/auth/register.blade.php | 会員登録画面 |  
-| public/css/auth/register.css | 会員登録画面専用スタイル |  
-### 3.ユーザー登録・遷移フロー  
-・登録後の自動遷移: 会員登録成功後、スムーズにプロフィール設定（マイページ）へ誘導するため、Fortifyの設定により遷移先を /mypage/profile にカスタマイズ済みです。  
+・バリデーション：FormRequest を使用したサーバーサイドでの入力チェック。  
+・メール認証：新規登録時の本人確認メール送信機能追加。  
+・レスポンシブ・デザイン：PC(1400px - 1540px)とタブレット(768px - 850px)に対応。
+
+### 2.実装ファイル一覧
+
+| ファイルパス                            | 役割・実装内容                           |
+| --------------------------------------- | ---------------------------------------- |
+| app/Http/Requests/RegisterRequest.php   | バリデーション定義ルール・メッセージ定義 |
+| resources/views/auth/register.blade.php | 会員登録画面                             |
+| public/css/auth/register.css            | 会員登録画面専用スタイル                 |
+
+### 3.ユーザー登録・遷移フロー
+
+・登録後の自動遷移: 会員登録成功後、スムーズにプロフィール設定（マイページ）へ誘導するため、Fortify の設定により遷移先を /mypage/profile にカスタマイズ済みです。
