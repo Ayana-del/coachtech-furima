@@ -46,7 +46,7 @@
         </div>
     </form>
     <div class="register__link">
-        <a href="/register">会員登録はこちら</a>
+        <a href="{{ route('register') }}" class="register-link">会員登録はこちら</a>
     </div>
 </div>
 @endsection

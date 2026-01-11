@@ -71,9 +71,9 @@
                 </div>
                 <div class="form__error">
                     @error('password')
-                        @if(str_contains($message, '一致'))
-                        {{ $message }}
-                        @endif
+                    @if(str_contains($message, '一致'))
+                    {{ $message }}
+                    @endif
                     @enderror
                 </div>
             </div>
@@ -85,7 +85,6 @@
     </form>
 
     <div class="register__link">
-        <a class="register__link-button" href="{{ route('login') }}">ログインはこちら</a>
+        <a href="{{ route('login') }}" class="login-link">ログインはこちら</a>
     </div>
-</div>
-@endsection
+    @endsection
