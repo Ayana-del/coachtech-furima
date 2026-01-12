@@ -1,12 +1,12 @@
 @extends('layouts.common')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 @endsection
 
 @section('content')
-<div class="login__content">
-    <div class="login__heading">
+<div class="auth__content">
+    <div class="auth__heading">
         <h2>ログイン</h2>
     </div>
     <form class="form" action="/login" method="post" novalidate>
@@ -45,8 +45,8 @@
             <button class="form__button-submit" type="submit">ログインする</button>
         </div>
     </form>
-    <div class="register__link">
-        <a href="{{ route('register') }}" class="register-link">会員登録はこちら</a>
+    <div class="auth__link">
+        <a href="{{ route('register') }}" class="auth--item">会員登録はこちら</a>
     </div>
 </div>
 @endsection
