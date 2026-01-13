@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ItemController;
 
 // 商品一覧画面
-Route::get('/', [ProductController::class, 'index'])->name('product.index');
+Route::get('/', [ItemController::class, 'index'])->name('item.index');
 // 認証完了後の結果画面（プロフィール）
 Route::get('/profile', function () {
     return view('profile.index');

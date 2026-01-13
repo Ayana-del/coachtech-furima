@@ -21,19 +21,25 @@
 
         <nav class="header-nav">
             <ul class="header-nav__list">
-                @auth
+                @guest
+                {{-- 会員登録・ログイン・メール認証画面「以外」の時は、ログインを表示する --}}
+                @if (!Route::is(['register', 'login', 'verification.notice']))
                 <li class="header-nav__item">
-                    <form class="form" action="{{ route('logout') }}" method="post">
+                    <a href="{{ route('login') }}" class="header-nav__link">ログイン</a>
+                </li>
+                @endif
+                @endguest
+                @auth
+                {{-- メール認証画面（認証待ち）などの「特殊な画面以外」の時は、ログアウトを表示する --}}
+                @if (!Route::is(['verification.notice']))
+                <li class="header-nav__item">
+                    <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="header-nav__button">ログアウト</button>
                     </form>
                 </li>
+                @endif
                 @endauth
-                @guest
-                <li class="header-nav__item">
-                    <a href="{{ route('login') }}" class="header-nav__link">ログイン</a>
-                </li>
-                @endguest
             </ul>
         </nav>
     </header>

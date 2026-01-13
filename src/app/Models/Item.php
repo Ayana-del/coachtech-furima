@@ -4,23 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
 
 class Item extends Model
 {
-    protected $fillable = ['user_id', 'name', 'brand', 'price', 'description', 'condition', 'image_url'];
-    // 出品者
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'name',
+        'image_url',
+        'brand_name',
+        'price',
+        'description',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    // カテゴリ（多対多）
-    public function categories()
+    public function likes()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->hasMany(Like::class,'item_id');
     }
-    // コメント (1対多)
-    public function comments()
+    public function orders()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Order::class, 'item_id');
+    }
+    public function getIsSoldAttribute()
+    {
+        return $this->orders()->exists();
     }
 }

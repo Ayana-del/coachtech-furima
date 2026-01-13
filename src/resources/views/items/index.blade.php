@@ -1,0 +1,42 @@
+@extends('layouts.common')
+
+@section('search')
+<form action="{{ route('item.index') }}" method="get" class="header-search-form">
+    <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="なにをお探しですか？">
+</form>
+@endsection
+
+@section('content')
+<div class="item-page">
+    <div class="tab-container">
+        <a href="{{ route('item.index', ['keyword' => $keyword]) }}"
+            class="tab-item {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
+
+        <a href="{{ route('item.index', ['tab' => 'mylist', 'keyword' => $keyword]) }}"
+            class="tab-item {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
+    </div>
+
+    <div class="item-grid">
+        @forelse($items as $item)
+        <div class="item-item">
+            {{-- 詳細ページが未実装でもエラーにならないよう '#' にしています --}}
+            <a href="#">
+                <div class="item-image">
+                    {{-- 画像パスの確認 --}}
+                    <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+
+                    @if($item->is_sold)
+                    <div class="sold-label">Sold</div>
+                    @endif
+                </div>
+                <div class="item-name">
+                    {{ $item->name }}
+                </div>
+            </a>
+        </div>
+        @empty
+        <p class="no-items">表示する商品がありません。</p>
+        @endforelse
+    </div>
+</div>
+@endsection

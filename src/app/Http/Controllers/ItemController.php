@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 
-class ProductController extends Controller
+class ItemController extends Controller
 {
     public function index(Request $request)
     {
         $tab = $request->query('tab');
         $keyword = $request->query('keyword');
 
-        $query = Product::where('user_id', '!=', Auth::id());
+        // 自分以外の出品物を取得
+        $query = Item::where('user_id', '!=', Auth::id());
 
         if ($keyword) {
             $query->where('name', 'LIKE', "%{$keyword}%");
@@ -29,8 +30,8 @@ class ProductController extends Controller
             }
         }
 
-        $products = $query->get();
+        $items = $query->get();
 
-        return view('products.index', compact('products', 'tab', 'keyword'));
+        return view('items.index', compact('items', 'tab', 'keyword'));
     }
 }
