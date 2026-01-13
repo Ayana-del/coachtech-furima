@@ -14,6 +14,11 @@
                 <img src="{{ asset('img/COACHTECH_hederlogo.png') }}" alt="COACHTECH">
             </a>
         </h1>
+
+        <div class="header__search">
+            @yield('search')
+        </div>
+
         <nav class="header-nav">
             <ul class="header-nav__list">
                 @auth
@@ -24,6 +29,11 @@
                     </form>
                 </li>
                 @endauth
+                @guest
+                <li class="header-nav__item">
+                    <a href="{{ route('login') }}" class="header-nav__link">ログイン</a>
+                </li>
+                @endguest
             </ul>
         </nav>
     </header>

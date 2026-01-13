@@ -24,6 +24,6 @@ class Product extends Model
     }
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class,'item_id');
     }
 }
