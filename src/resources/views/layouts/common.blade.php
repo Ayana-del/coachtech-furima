@@ -14,6 +14,18 @@
                 <img src="{{ asset('img/COACHTECH_hederlogo.png') }}" alt="COACHTECH">
             </a>
         </h1>
+        <nav class="header-nav">
+            <ul class="header-nav__list">
+                @auth
+                <li class="header-nav__item">
+                    <form class="form" action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button class="header-nav__button">ログアウト</button>
+                    </form>
+                </li>
+                @endauth
+            </ul>
+        </nav>
     </header>
 
     <main>

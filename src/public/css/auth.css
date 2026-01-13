@@ -84,3 +84,89 @@
         border-bottom: 2px solid #0073CC;
     }
 }
+
+.verify-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* 画面の高さ一杯を使って中央配置 */
+    width: 100%;
+}
+.verify-content {
+    /* Figmaの座標に基づき、中央付近に要素を配置 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 720px;
+    /* テキストの幅に合わせる */
+}
+.verify-text {
+    width: 720px;
+    height: 58px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 82px;
+    /* top 319px と 459px の差分を考慮 */
+}
+/* auth.css */
+
+.btn-verify {
+    /* 1. ここが重要：ただのリンク(aタグ)を「箱（ボタン）」に変えます */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* 2. Figmaのサイズを適用 */
+    width: 200px;
+    height: 50px;
+
+    margin-top: 30px;
+    margin-bottom: 72px;
+
+    /* 3. 背景色と文字色 */
+    background-color: #D9D9D9;
+    color: #000000;
+    border: 1px solid #000000;
+
+    /* 4. その他Figmaの指定 */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1;
+    text-decoration: none;
+    /* リンクの下線を消す */
+    border-radius: 2px;
+}
+
+/* 認証メールを再送する リンク */
+.link-resend {
+    display: inline-block;
+    width: 257px;
+    height: 53.29px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    color: #0073CC;
+    text-decoration: underline;
+    /* リンクとして分かりやすくするため追加 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* セッションメッセージのスタイル（任意） */
+.status-message {
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #28a745;
+}
