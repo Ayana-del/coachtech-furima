@@ -64,7 +64,7 @@ docker-compose exec php php artisan migrate
 
 ## ER 図
 
-![ER図](./er-diagram.png)
+![ER図](./er-diagram.drawio.png)
 
 ## データベース設計　
 
