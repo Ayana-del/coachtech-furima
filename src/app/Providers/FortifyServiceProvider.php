@@ -19,14 +19,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // 1. 自作の会員登録バリデーションをFortifyに紐付け
-        $this->app->bind(
-            \Laravel\Fortify\Http\Requests\RegisterRequest::class,
-            \App\Http\Requests\RegisterRequest::class
-        );
-
-        // 2. 自作のログインバリデーションをFortifyに紐付け（TypeError解消の鍵）
-        $this->app->bind(
+        $this->app->singleton(
             \Laravel\Fortify\Http\Requests\LoginRequest::class,
             \App\Http\Requests\LoginRequest::class
         );

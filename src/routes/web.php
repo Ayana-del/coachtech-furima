@@ -4,15 +4,23 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ProfileController;
 
-// 商品一覧画面
+// --- 1. 誰でも見れるルート ---
 Route::get('/', [ItemController::class, 'index'])->name('item.index');
-// 認証完了後の結果画面（プロフィール）
-Route::get('/profile', function () {
-    return view('profile.index');
-})->middleware(['auth', 'verified'])->name('profile.index');
 
-// メール認証画面の表示
+// --- 2. ログイン & メール認証完了後にアクセスできるルート  ---
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // プロフィール表示画面 (GET)
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.index');
+
+    // プロフィール更新処理 (POST) -
+    Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.store');
+});
+
+// --- 3. メール認証関連 (Fortifyの要件) ---
+// メール認証誘導画面
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
@@ -23,8 +31,9 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back();
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-// メール内の認証リンクをクリックした時の処理
+// 認証リンククリック時の処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect()->route('profile.index'); // 認証完了後にプロフィールへ
+    // ここでprofile.indexへ飛ばす
+    return redirect()->route('profile.index');
 })->middleware(['auth', 'signed'])->name('verification.verify');
