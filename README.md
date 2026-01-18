@@ -6,17 +6,32 @@ coachtech フリマアプリの開発プロジェクトです。
 
 本アプリケーションは、ユーザーが商品を自ら出品・購入できるフリマプラットフォームです。
 
-## 使用技術（実行環境）
+## 使用技術（実行環境）  
+## ■ 使用技術（実行環境）
 
-・Backend: PHP 8.1/ Laravel 8.x  
-・Frontend: Blade / CSS  
-・nfrastructure: Docker / Docker Compose  
-・Web Server: Nginx 1.21.1  
-・Database: MySQL 8.0.35  
-・Tool: phpMyAdmin / MailHog  
-・Laravel Fortify  
-・Blade  
-・CSS
+開発環境および使用している主要な技術スタックは以下の通りです。
+
+### 1. 開発インフラ / サーバー構成
+| 項目 | 技術 / バージョン |
+| ---- | ---- |
+| インフラ | Docker / Docker Compose |
+| Webサーバー | Nginx 1.21.1 |
+| データベース | MySQL 8.0.35 |
+| ツール | phpMyAdmin (DB管理), MailHog (メールテスト) |
+
+### 2. バックエンド (Backend)
+| 項目 | 技術 / バージョン |
+| ---- | ---- |
+| 言語 | PHP 8.1 |
+| フレームワーク | Laravel 8.x |
+| 認証パッケージ | Laravel Fortify (会員登録・ログイン・メール認証) |
+
+### 3. フロントエンド (Frontend)
+| 項目 | 技術 |
+| ---- | ---- |
+| テンプレートエンジン | Blade |
+| スタイリング | CSS (Native CSS) |
+
 
 ## 環境構築手順
 
@@ -159,6 +174,27 @@ Eloquent モデルにおける主要なリレーションシップを以下に�
 | edit | プロフィール編集画面表示 | ログインユーザーの現在のプロフィール設定値をビューへ渡します。 |  
 | update | プロフィール更新 | ・氏名、住所、画像等のバリデーションと更新。<br>・既存画像がある場合は削除した上で新画像を保存。<br>・`users`と`profiles`の両テーブルを更新。 |  
   
+## ■ ルーティング定義
+
+### 1. 公開ルート（未ログインでもアクセス可能）
+| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |
+| ---- | ---- | ---- | ---- | ---- |
+| `/` | GET | `item.index` | `ItemController@index` | 商品一覧画面の表示 |
+| `/item/{item_id}` | GET | `item.show` | `ItemController@show` | 商品詳細画面の表示 |
+
+### 2. 認証制限ルート（ログインおよびメール認証が必要）
+| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |
+| ---- | ---- | ---- | ---- | ---- |
+| `/mypage` | GET | `mypage` | `MypageController@index` | ユーザーマイページの表示 |
+| `/mypage/profile` | GET | `profile.edit` | `ProfileController@edit` | プロフィール編集画面の表示 |
+| `/mypage/profile` | POST | `profile.store` | `ProfileController@update` | プロフィール情報の更新処理 |
+
+### 3. メール認証関連（Fortify要件）
+| URL | メソッド | ルート名 | 処理内容 |
+| ---- | ---- | ---- | ---- | ---- |
+| `/email/verify` | GET | `verification.notice` | メール認証誘導画面の表示 |
+| `/email/verification-notification` | POST | `verification.send` | 認証メールの再送処理 |
+| `/email/verify/{id}/{hash}` | GET | `verification.verify` | 認証リンククリック時の検証と遷移 |
 
 ## 会員登録・メール認証機能の実装
 
