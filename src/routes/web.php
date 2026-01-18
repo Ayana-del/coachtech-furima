@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
 
     // プロフィール編集画面 (GET)
-    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.index');
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 
     // プロフィール更新処理 (POST) -
     Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.store');
