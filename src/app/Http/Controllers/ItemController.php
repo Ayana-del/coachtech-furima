@@ -13,8 +13,11 @@ class ItemController extends Controller
         $tab = $request->query('tab');
         $keyword = $request->query('keyword');
 
-        // 自分以外の出品物を取得
-        $query = Item::where('user_id', '!=', Auth::id());
+        $query = Item::query();
+
+        if (Auth::check()) {
+            $query->where('user_id', '!=', Auth::id());
+        }
 
         if ($keyword) {
             $query->where('name', 'LIKE', "%{$keyword}%");

@@ -26,6 +26,8 @@
                 @if (!Route::is(['register', 'login', 'verification.notice']))
                 <li class="header-nav__item">
                     <a href="{{ route('login') }}" class="header-nav__link">ログイン</a>
+                <li class="header-nav__item"><a href="/mypage" class="header-nav__link">マイページ</a></li>
+                <li class="header-nav__item"><a href="{{ route('login') }}" class="header-nav__link">出品</a></li>
                 </li>
                 @endif
                 @endguest
@@ -38,6 +40,8 @@
                         <button class="header-nav__button">ログアウト</button>
                     </form>
                 </li>
+                <li class="header-nav__item"><a href="/mypage" class="header-nav__link">マイページ</a></li>
+                <li class="header-nav__item"><a href="/sell" class="header-nav__link">出品</a></li>
                 @endif
                 @endauth
             </ul>

@@ -4,13 +4,21 @@
 <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
+@section('search')
+<div class="header__search-bar">
+    <form action="/" method="get">
+        <input type="text" name="keyword" placeholder="何をお探しですか？">
+    </form>
+</div>
+@endsection
+
 @section('content')
 <div class="profile__content">
     <div class="profile__heading">
         <h2>プロフィール設定</h2>
     </div>
 
-    <form class="form" action="{{ route('profile.store') }}" method="post" enctype="multipart/form-data">
+    <form class="form" action="{{ route('profile.store') }}" method="post" enctype="multipart/form-data" novalidate>
         @csrf
 
         {{-- FN029: プロフィール画像設定 --}}
