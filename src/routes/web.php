@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MypageController;
 
 // --- 1. 誰でも見れるルート ---
 //商品一覧画面
@@ -15,7 +16,10 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show'
 // --- 2. ログイン & メール認証完了後にアクセスできるルート  ---
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // プロフィール表示画面 (GET)
+    // マイページ
+    Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
+
+    // プロフィール編集画面 (GET)
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.index');
 
     // プロフィール更新処理 (POST) -

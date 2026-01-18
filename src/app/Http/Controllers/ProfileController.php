@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Profile;
-
+use App\Models\User;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
+        /** @var User $user */
         $user = Auth::user();
         // 過去の設定値を渡す
         $profile = $user->profile ?? new Profile();
@@ -20,6 +21,7 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
 
         // バリデーション
@@ -31,18 +33,18 @@ class ProfileController extends Controller
             'image_url' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // １. ユーザー名の更新
+        // 1. ユーザー名の更新 (usersテーブル)
         $user->update(['name' => $request->name]);
 
-        // ２. 画像の保存
+        // 2. プロフィールデータの準備
         $profileData = $request->only(['postcode', 'address', 'building']);
+        $profileData['name'] = $request->name;
 
+        // 3. 画像の保存
         if ($request->hasFile('image_url')) {
-            // 古い画像を削除（任意）
             if ($user->profile && $user->profile->image_url) {
                 Storage::disk('public')->delete($user->profile->image_url);
             }
-            // storage/app/public/profiles に保存
             $path = $request->file('image_url')->store('profiles', 'public');
             $profileData['image_url'] = $path;
         }
@@ -52,7 +54,8 @@ class ProfileController extends Controller
             ['user_id' => $user->id],
             $profileData
         );
-        //遷移先(一覧へ)
-        return redirect()->route('item.index')->with('message', 'プロフィールを更新しました');
+
+        // 遷移先
+        return redirect()->route('mypage.index')->with('message', 'プロフィールを更新しました');
     }
 }

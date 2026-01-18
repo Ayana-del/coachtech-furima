@@ -51,9 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Item::class);
     }
-    // マイリスト（いいねした商品） (多対多)
-    public function likedItems()
+    public function orders()
     {
-        return $this->belongsToMany(Item::class, 'likes');
+    // 自分が購入した履歴
+        return $this->hasMany(Order::class);
     }
 }
