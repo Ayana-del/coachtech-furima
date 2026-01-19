@@ -174,27 +174,29 @@ Eloquent モデルにおける主要なリレーションシップを以下に�
 | edit | プロフィール編集画面表示 | ログインユーザーの現在のプロフィール設定値をビューへ渡します。 |  
 | update | プロフィール更新 | ・氏名、住所、画像等のバリデーションと更新。<br>・既存画像がある場合は削除した上で新画像を保存。<br>・`users`と`profiles`の両テーブルを更新。 |  
   
-## ■ ルーティング定義
-
-### 1. 公開ルート（未ログインでもアクセス可能）
-| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |
-| ---- | ---- | ---- | ---- | ---- |
-| `/` | GET | `item.index` | `ItemController@index` | 商品一覧画面の表示 |
-| `/item/{item_id}` | GET | `item.show` | `ItemController@show` | 商品詳細画面の表示 |
-
-### 2. 認証制限ルート（ログインおよびメール認証が必要）
-| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |
-| ---- | ---- | ---- | ---- | ---- |
-| `/mypage` | GET | `mypage` | `MypageController@index` | ユーザーマイページの表示 |
-| `/mypage/profile` | GET | `profile.edit` | `ProfileController@edit` | プロフィール編集画面の表示 |
-| `/mypage/profile` | POST | `profile.store` | `ProfileController@update` | プロフィール情報の更新処理 |
-
-### 3. メール認証関連（Fortify要件）
-| URL | メソッド | ルート名 | 処理内容 |
-| ---- | ---- | ---- | ---- | ---- |
-| `/email/verify` | GET | `verification.notice` | メール認証誘導画面の表示 |
-| `/email/verification-notification` | POST | `verification.send` | 認証メールの再送処理 |
-| `/email/verify/{id}/{hash}` | GET | `verification.verify` | 認証リンククリック時の検証と遷移 |
+## ルーティング定義  
+### 1.公開ルート  
+未ログインの状態でも閲覧可能なページです。  
+| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |  
+| ---- | ---- | ---- | ---- | ---- |  
+| / | GET | item.index | ItemController@index | 商品一覧画面の表示 |  
+| /item/{item_id} | GET | item.show | ItemController@show | 商品詳細画面の表示 |  
+  
+### 2.要認証ルート（メール認証済みのユーザーのみ）  
+ログインしており、かつメール認証が完了しているユーザーのみがアクセス可能です。  
+| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |  
+| ---- | ---- | ---- | ---- | ---- |  
+| /mypage | GET | mypage | MypageController@index | ユーザーマイページの表示 |  
+| /mypage/profile | GET | profile.edit | ProfileController@edit | プロフィール編集画面の表示 |  
+| /mypage/profile | POST | profile.store | ProfileController@update | プロフィール情報の更新処理 |  
+  
+### 3.メール認証関連・遷移関連  
+メール認証のプロセスおよび、認証完了時のリダイレクトを制御するルートです。  
+| URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |  
+| ---- | ---- | ---- | ---- | ---- |  
+| /email/verify | GET | verification.notice | メール認証が必要な旨を伝える誘導画面を表示。  
+| /email/verification-notification | POST | verification.send | 認証メールを再送信する処理 |  
+| /email/verify/{id}/{hash} | GET | verification.verify | 初回認証完了時のみ「プロフィール編集画面」へ遷移。 |  
 
 ## 会員登録・メール認証機能の実装
 

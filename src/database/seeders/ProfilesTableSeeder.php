@@ -22,5 +22,23 @@ class ProfilesTableSeeder extends Seeder
             'building' => 'テックビル 101',
             'image_url' => null,
         ]);
+
+        Profile::create([
+            'user_id' => 2,
+            'name' => '購入者 次郎',
+            'postcode' => '530-0001',
+            'address' => '大阪府大阪市北区梅田1-1',
+            'building' => '梅田タワー 20F',
+            'image_url' => null,
+        ]);
+
+        Profile::create([
+            'user_id' => 3,
+            'name' => '未認証 三郎',
+            'postcode' => '810-0001',
+            'address' => '福岡県福岡市中央区天神1-1',
+            'building' => '天神プラザ 5F',
+            'image_url' => null,
+        ]);
     }
 }

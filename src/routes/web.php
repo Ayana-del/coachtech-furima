@@ -41,6 +41,5 @@ Route::post('/email/verification-notification', function (Request $request) {
 // 認証リンククリック時の処理
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    // ここでprofile.indexへ飛ばす
-    return redirect()->route('profile.index');
+    return redirect()->route('profile.edit');
 })->middleware(['auth', 'signed'])->name('verification.verify');
