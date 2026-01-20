@@ -1,7 +1,7 @@
 @extends('layouts.common')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('css/profile/index.css') }}">
 @endsection
 
 @section('search')
@@ -18,10 +18,10 @@
         <h2>プロフィール設定</h2>
     </div>
 
-    <form class="form" action="{{ route('profile.store') }}" method="post" enctype="multipart/form-data" novalidate>
+    <form class="form" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data" novalidate>
         @csrf
-
-        {{-- FN029: プロフィール画像設定 --}}
+        @method('PATCH')
+        {{-- プロフィール画像設定 --}}
         <div class="form__group">
             <div class="profile-image__flex">
                 <div class="profile-image__preview">
@@ -30,9 +30,7 @@
                     <img src="{{ asset('storage/' . $profile->image_url) }}" alt="ユーザーアイコン" class="user-icon">
                     @else
                     {{-- 画像がない場合は絵文字アイコンを表示 --}}
-                    <div class="user-icon default-emoji">
-                        👤
-                    </div>
+                    <div class="default-emoji">👤</div>
                     @endif
                 </div>
                 <label class="profile-image__label">

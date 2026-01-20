@@ -23,7 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 
     // プロフィール更新処理 (POST) -
-    Route::post('/mypage/profile', [ProfileController::class, 'update'])->name('profile.store');
+    Route::patch('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // --- 3. メール認証関連 (Fortifyの要件) ---
