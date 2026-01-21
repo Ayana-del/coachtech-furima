@@ -25,9 +25,7 @@
                 {{-- 会員登録・ログイン・メール認証画面「以外」の時は、ログインを表示する --}}
                 @if (!Route::is(['register', 'login', 'verification.notice']))
                 <li class="header-nav__item">
-                    <a href="{{ route('login') }}" class="header-nav__link">ログイン</a>
-                <li class="header-nav__item"><a href="/mypage" class="header-nav__link">マイページ</a></li>
-                <li class="header-nav__item"><a href="{{ route('login') }}" class="header-nav__link">出品</a></li>
+                    <a href="{{ route('login') }}" class="header-nav__button">ログイン</a>
                 </li>
                 @endif
                 @endguest

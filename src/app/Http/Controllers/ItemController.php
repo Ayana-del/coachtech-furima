@@ -47,6 +47,6 @@ class ItemController extends Controller
             $isLiked = $item->likes->contains('user_id', Auth::id());
         }
 
-        return view('items.detail', compact('item', 'isLiked'));
+        return view('items.show', compact('item', 'isLiked'));
     }
 }

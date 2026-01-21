@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+// 追加：リダイレクト制御に使用するクラス
+use Laravel\Fortify\Http\Responses\LoginResponse;
+use Illuminate\Support\Facades\Auth;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -51,6 +54,23 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
             return Limit::perMinute(10)->by($email . $request->ip());
+        });
+
+        // --- 追加：ログイン後のリダイレクト（振り分け）制御 ---
+        $this->app->instance(LoginResponse::class, new class extends LoginResponse {
+            public function toResponse($request)
+            {
+                $user = Auth::user();
+                $profile = $user->profile;
+
+                // プロフィールが未登録、または必須項目（郵便番号・住所）が空の場合はプロフィール編集へ
+                if (!$profile || empty($profile->postcode) || empty($profile->address)) {
+                    return redirect()->route('profile.edit');
+                }
+
+                // すべて入力済みなら商品一覧（トップ）へ
+                return redirect('/');
+            }
         });
     }
 }

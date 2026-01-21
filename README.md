@@ -92,7 +92,7 @@ php artisan migrate:fresh --seed
 
 状態の異なる３名のユーザーを用意しています。  
 | ユーザー役割 | メールアドレス | パスワード | 認証状態 | 確認できる要件 |  
-| ---- | ---- | ---- | ---- | ---- |.
+| ---- | ---- | ---- | ---- | ---- |  
 | 出品者(ID:1) | test@example.com | password123 | 認証済み | 自分の商品が一覧に表示されない |  
 | 購入者 (ID:2) | buyer@example.com | password123 | 認証済み | 他者の商品の閲覧・購入・いいね |  
 | 未認証者(ID:3) | guest@example.com | password123 | 未認証 | ログイン後のメール認証誘導 |
@@ -105,7 +105,7 @@ php artisan migrate:fresh --seed
 
 ### 3. 商品・状態データ
 
-ユーザー ID:1（出品者）\*\*によって、以下の 10 点の商品が登録されています。  
+ユーザー ID:1（出品者）によって、以下の 10 点の商品が登録されています。  
 | 商品名 | 価格 | ブランド | 商品の状態 |  
 | ---- | ---- | ---- | ---- |
 | 腕時計 | ¥15,000 | Rolax | 良好 |  
@@ -249,10 +249,10 @@ Eloquent モデルにおける主要なリレーションシップを以下に�
 メール認証のプロセスおよび、認証完了時のリダイレクトを制御するルートです。  
 | URL | メソッド | ルート名 | 処理内容 |  
 | ---- | ---- | ---- | ---- |  
-| /email/verify | GET | verification.notice | メール認証が必要な旨を伝える誘導画面を表示。  
+| /email/verify | GET | verification.notice | メール認証が必要な旨を伝える誘導画面を表示。 |  
 | /email/verification-notification | POST | verification.send | 認証メールを再送信する処理 |  
-| /email/verify/{id}/{hash} | GET | verification.verify | 初回認証完了時のみ「プロフィール編集画面」へ遷移。 |
-
+| /email/verify/{id}/{hash} | GET | verification.verify | 初回認証完了時のみ「プロフィール編集画面」へ遷移。 |  
+  
 ## 会員登録・メール認証機能の実装
 
 ### 1.実装済み機能
@@ -345,7 +345,8 @@ Eloquent モデルにおける主要なリレーションシップを以下に�
 ・タブ切り替え UI: JavaScript を活用し、ページリロードなしで「出品物」と「購入物」を切り替える快適な操作感を提供。  
   
 ### 2. 実装ファイル  
-| ファイルパス | 役###割・実装内容 |  
+| ファイルパス | 役割・実装内容 |  
+| ---- | ---- |
 | app/Http/Controllers/MypageController.php | 出品/購入商品の取得、プロフィールデータの統合 |  
 | resources/views/mypage/index.blade.php | マイページUI、タブ切り替えスクリプト |  
 | app/Models/User.php | items()（出品）および orders()（購入）のリレーション定義 |  
@@ -380,11 +381,57 @@ Eloquent モデルにおける主要なリレーションシップを以下に�
 
 ・「購入手続きへ」ボタンより、商品購入画面へシームレスに遷移。  
 
-### 2. 実装ファイル一覧  
-| ファイルパス | 役割・実装内容 |  
-| app/Http/Controllers/ItemController.php | 詳細情報の取得、いいね数・コメント数の集計 |  
-| app/Http/Requests/CommentRequest.php | コメント投稿時のバリデーション（必須・255文字制限） |  
-| app/Http/Controllers/LikeController.php | いいねの登録・削除ロジック（非同期または同期処理） |  
-| app/Http/Controllers/CommentController.php | コメント保存および商品詳細へのリダイレクト処理 |  
-| resources/views/item/show.blade.php | 詳細画面のUI、カテゴリのループ表示、コメント一覧 |  
+### 2. 実装ファイル一覧
+
+| ファイルパス | 役割・実装内容 |
+| ---- | ---- |
+| app/Http/Controllers/ItemController.php | 詳細情報の取得、いいね数・コメント数の集計 |
+| app/Http/Requests/CommentRequest.php | コメント投稿時のバリデーション（必須・255文字制限） |
+| app/Http/Controllers/LikeController.php | いいねの登録・削除ロジック |
+| app/Http/Controllers/CommentController.php | コメント保存および商品詳細へのリダイレクト処理 |
+| resources/views/item/show.blade.php | 詳細画面のUI、カテゴリのループ表示、コメント一覧 |
+
+## プロフィール編集画面  
+ユーザーが自身の情報を管理するための「プロフィール編集画面」および、「ユーザー情報変更機能」を実装。  
+### 1.対応要件一覧  
+■ ユーザー情報変更機能  
+以下の項も項について、過去の設定値を初期値として表示し、更新できる機能を実装しました。  
+・プロフィール画像：  
+ ・保存先：Laravelのstorage/app/public/profiles ディレクトリ  
+ ・ブラウザ表示用のシンボリックリンク設定済み（php artisan storage:link）  
+  
+・ユーザー名: users テーブルおよび profiles テーブルとの連携  
+  
+・郵便番号: 8桁制限  
+  
+・住所: profiles テーブルへの保存  
+  
+・建物名: 任意入力項目として実装  
+  
+■ マイページ連携. 
+・プロフィール表示: マイページにて画像とユーザー名が正しく取得・表示されることを確認。  
+・動線: マイページからプロフィール編集画面への遷移ボタンを配置。  
+  
+### 2.技術的仕様  
+・データベース構成: profiles テーブルを新規作成し、user_id による users テーブルとの外部キー制約（cascadeOnDelete）を設定。  
+  
+・画像処理:  
+ ・画像未設定時はデフォルトのプレビュー（👤）を表示。  
+  
+・リアルタイム・プレビュー: JavaScriptを用いて、保存前に選択した画像を即座に確認可能。  
+  
+・画像削除機能: 任意でプロフィール画像を解除し、初期状態（画像なし）に戻せる機能。  
+  
+・スマート・アップロード: 新しい画像が保存される際、サーバー内の古い不要ファイルを自動削除するクリーン設計。  
+### 3.使用技術・環境  
+・Backend: PHP 8.x / Laravel 10.x (Eloquent ORM)  
+
+・Frontend: JavaScript (File API), CSS3 (Responsive Design)  
+
+・Database: MySQL / PostgreSQL (Unique Constraints)  
+
+・Storage: Laravel Storage (Public Disk)  
+
+
+
 
