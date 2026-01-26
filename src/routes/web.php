@@ -15,9 +15,12 @@ Route::get('/item/{item_id}', [ItemController::class, 'show'])->name('item.show'
 
 // --- 2. ログイン & メール認証完了後にアクセスできるルート  ---
 Route::middleware(['auth', 'verified'])->group(function () {
-
+    //いいね登録・解除
+    Route::post('/item/{item_id}/like', [ItemController::class, 'toggleLike'])->name('items.like');
     // マイページ
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
+    //出品
+    Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
 
     // プロフィール編集画面 (GET)
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');

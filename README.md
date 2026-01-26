@@ -56,12 +56,17 @@ cd coachtech-furima
 docker-compose up -d --build
 ```
 
-### 3.依存パッケージのインストール
+### 環境設定ファイルの準備
 
 ```bash
 cp src/.env.example src/.env
 ```
-
+  
+### 依存パッケージのインストールとキー生成
+```bash  
+docker-compose exec php composer install  
+```
+  
 ```bash
 docker-compose exec php php artisan key:generate
 ```
@@ -71,13 +76,20 @@ docker-compose exec php php artisan key:generate
 ```bash
 docker-compose exec php php artisan migrate
 ```
-
-### 6.初期データの投入
+  
+### 6.「シンボリックリンク」の作成を追加  
+ブラウザからアップロード画像等を表示できるようにするため、以下のコマンドを実行してください。  
+  
+```bash
+docker-compose exec php php artisan storage:link  
+```  
+  
+### 7.初期データの投入
 
 開発および動作確認のため、以下の手順でダミーデータを投入してください。
 
 ```bash
-php artisan migrate:fresh --seed
+docker-compose exec php php artisan migrate:fresh --seed
 ```
 
 重要: データの整合性を保つため、DatabaseSeeder は以下の順序で実行されるよう構成されています。  

@@ -22,10 +22,23 @@
             {{-- いいね・コメント数 --}}
             <section class="item-stats">
                 <div class="stat-group">
-                    {{-- いいねボタン --}}
-                    <i class="fa-star {{ $isLiked ? 'fas text-yellow' : 'far' }}"></i>
-                    <span>{{ $item->likes->count() }}</span>
+                    {{-- いいね登録・解除のトグルボタン --}}
+                    <form action="{{ route('items.like', $item->id) }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; vertical-align: middle;">
+                            @if(auth()->check() && $isLiked)
+                            {{-- 2. クリック後（いいね済み）：ピンクのハートを表示 --}}
+                            <img src="{{ asset('img/ハートロゴ_ピンク.png') }}" alt="いいね済み" width="32">
+                            @else
+                            {{-- 2. クリック前（デフォルト）：白抜きのハートを表示 --}}
+                            <img src="{{ asset('img/ハートロゴ_デフォルト.png') }}" alt="いいね" width="32">
+                            @endif
+                        </button>
+                    </form>
+                    {{-- 1-a / 3-a. 合計値の増減表示 --}}
+                    <span class="like-count" style="margin-left: 5px;">{{ $item->likes->count() }}</span>
                 </div>
+
                 <div class="stat-group">
                     <i class="far fa-comment"></i>
                     <span>{{ $item->comments->count() }}</span>
@@ -40,7 +53,7 @@
             {{-- 商品説明 --}}
             <section class="item-description">
                 <h2 class="section-title">商品説明</h2>
-                <p>{{ $item->description }}</p>
+                <p style="white-space: pre-wrap;">{{ $item->description }}</p>
             </section>
 
             {{-- 商品情報詳細 --}}

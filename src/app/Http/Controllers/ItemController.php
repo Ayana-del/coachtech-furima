@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -48,5 +49,33 @@ class ItemController extends Controller
         }
 
         return view('items.show', compact('item', 'isLiked'));
+    }
+    public function toggleLike($item_id)
+    {
+        // 未ログインユーザーはログイン画面へリダイレクト
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $user_id = Auth::id();
+
+        // 1 & 3. すでにいいねしているか確認（トグルロジック）
+        $like = Like::where('item_id', $item_id)->where('user_id', $user_id)->first();
+
+        if ($like) {
+            // 3. すでに存在すれば削除（いいね解除）
+            $like->delete();
+            // 3-a. これにより $item->likes->count() が減少します
+        } else {
+            // 1. 存在しなければ作成（いいね登録）
+            Like::create([
+                'item_id' => $item_id,
+                'user_id' => $user_id,
+            ]);
+            // 1-a. これにより $item->likes->count() が増加します
+        }
+
+        // 元の詳細画面に戻る（再描画されてアイコンの色とカウントが更新される）
+        return back();
     }
 }

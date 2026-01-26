@@ -3,51 +3,63 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>COACHTECHフリマ</title>
-    <link rel="stylesheet" href="{{ asset('css/layouts/common.css') }}"> @yield('css')
+    <title>COACHTECH</title>
+    <link rel="stylesheet" href="{{ asset('css/layouts/common.css') }}">
+    @yield('css')
 </head>
 
 <body>
     <header class="header">
-        <h1 class="header__logo">
-            <a href="/">
-                <img src="{{ asset('img/COACHTECH_hederlogo.png') }}" alt="COACHTECH">
-            </a>
-        </h1>
+        <div class="header__inner">
+            <h1 class="header__logo">
+                <a href="/">
+                    <img src="{{ asset('img/COACHTECH_hederlogo.png') }}" alt="COACHTECH">
+                </a>
+            </h1>
+            <div class="header__search">
+                @yield('search')
+            </div>
+            <nav class="header-nav">
+                <ul class="header-nav__list">
+                    @guest
+                    @if (!Route::is(['register', 'login', 'verification.notice']))
+                    <li class="header-nav__item">
+                        <a href="{{ route('login') }}" class="header-nav__link">ログイン</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a href="{{ route('login') }}" class="header-nav__link">マイページ</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a href="{{ route('login') }}" class="header-nav__link">出品</a>
+                    </li>
+                    @endif
+                    @endguest
 
-        <div class="header__search">
-            @yield('search')
+                    @auth
+                    @if (!Route::is(['verification.notice']))
+                    <li class="header-nav__item">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button class="header-nav__button">ログアウト</button>
+                        </form>
+                    </li>
+                    {{-- ログイン後は「マイページ」に移動する設定でOKです（ルートを後で作る場合） --}}
+                    <li class="header-nav__item">
+                        <a href="/mypage" class="header-nav__link">マイページ</a>
+                    </li>
+                    <li class="header-nav__item">
+                        <a href="/sell" class="header-nav__link">出品</a>
+                    </li>
+                    @endif
+                    @endauth
+                </ul>
+            </nav>
         </div>
-
-        <nav class="header-nav">
-            <ul class="header-nav__list">
-                @guest
-                {{-- 会員登録・ログイン・メール認証画面「以外」の時は、ログインを表示する --}}
-                @if (!Route::is(['register', 'login', 'verification.notice']))
-                <li class="header-nav__item">
-                    <a href="{{ route('login') }}" class="header-nav__button">ログイン</a>
-                </li>
-                @endif
-                @endguest
-                @auth
-                {{-- メール認証画面（認証待ち）などの「特殊な画面以外」の時は、ログアウトを表示する --}}
-                @if (!Route::is(['verification.notice']))
-                <li class="header-nav__item">
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button class="header-nav__button">ログアウト</button>
-                    </form>
-                </li>
-                <li class="header-nav__item"><a href="/mypage" class="header-nav__link">マイページ</a></li>
-                <li class="header-nav__item"><a href="/sell" class="header-nav__link">出品</a></li>
-                @endif
-                @endauth
-            </ul>
-        </nav>
     </header>
 
     <main>
-        @yield('content') </main>
+        @yield('content')
+    </main>
 </body>
 
 </html>
