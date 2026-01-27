@@ -47,7 +47,7 @@
 
             {{-- 購入アクション --}}
             <div class="item-action">
-                <a href="#" class="btn btn-primary">購入手続きへ</a>
+                <a href="{{ route('item.purchase', $item->id) }}" class="btn btn-primary">購入手続きへ</a>
             </div>
 
             {{-- 商品説明 --}}

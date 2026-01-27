@@ -78,4 +78,10 @@ class ItemController extends Controller
         // 元の詳細画面に戻る（再描画されてアイコンの色とカウントが更新される）
         return back();
     }
+    public function purchase($item_id)
+    {
+        $item = Item::findOrFail($item_id);
+
+        return view('items.purchase', compact('item'));
+    }
 }

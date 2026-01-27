@@ -21,6 +21,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
     //出品
     Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
+    // 商品購入画面（GET)
+    Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
 
     // プロフィール編集画面 (GET)
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
