@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CommentRequest;
+use App\Models\Comment;
 
 class ItemController extends Controller
 {
@@ -83,5 +85,16 @@ class ItemController extends Controller
         $item = Item::findOrFail($item_id);
 
         return view('items.purchase', compact('item'));
+    }
+    public function storeComment(CommentRequest $request, $item_id)
+    {
+        Comment::create([
+            'item_id' => $item_id,
+            'user_id' => auth()->id(),
+            'comment' => $request->comment,
+        ]);
+
+        // 保存後、詳細画面に戻る
+        return back();
     }
 }

@@ -23,10 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
     // 商品購入画面（GET)
     Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
-
+    // コメント (POST)
+    Route::post('/item/{item_id}/comment', [ItemController::class, 'storeComment'])->name('comment.store');
     // プロフィール編集画面 (GET)
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-
     // プロフィール更新処理 (POST) -
     Route::patch('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 });

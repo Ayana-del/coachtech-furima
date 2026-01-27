@@ -76,6 +76,8 @@
             {{-- コメント一覧  --}}
             <section class="item-comments">
                 <h2 class="section-title">コメント ({{ $item->comments->count() }})</h2>
+
+                {{-- コメント一覧の表示 --}}
                 @foreach($item->comments as $comment)
                 <div class="comment-card">
                     <div class="user-info">
@@ -85,6 +87,31 @@
                     <p class="comment-text">{{ $comment->comment }}</p>
                 </div>
                 @endforeach
+
+                {{-- ここから「1. ログインユーザーのみ」が利用できる投稿フォームを追加 --}}
+                <div class="comment-form-wrapper">
+                    <h2 class="section-title">商品へのコメント</h2>
+                    @auth
+                    <form action="{{ route('comment.store', $item->id) }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            {{-- 2. バリデーション：入力必須、最大255文字 --}}
+                            <textarea name="comment" class="form-control" rows="5">{{ old('comment') }}</textarea>
+
+                            {{-- エラーメッセージの表示 --}}
+                            @error('comment')
+                            <p class="error-message" style="color: red; font-size: 0.8em; margin-top: 5px;">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">
+                            コメントを送信する
+                        </button>
+                    </form>
+                    @else
+                    <p><a href="{{ route('login') }}">ログイン</a>するとコメントを投稿できます。</p>
+                    @endauth
+                </div>
             </section>
         </div>
     </div>
