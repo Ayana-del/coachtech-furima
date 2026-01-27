@@ -19,10 +19,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/item/{item_id}/like', [ItemController::class, 'toggleLike'])->name('items.like');
     // マイページ
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
-    //出品
-    Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
     // 商品購入画面（GET)
     Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
+    //出品
+    Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
+    Route::post('/sell', [ItemController::class, 'store'])->name('item.store');
     // コメント (POST)
     Route::post('/item/{item_id}/comment', [ItemController::class, 'storeComment'])->name('comment.store');
     // プロフィール編集画面 (GET)

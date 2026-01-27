@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Like;
+use App\Http\Requests\ItemRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use App\Models\Category;
+use App\Models\Condition;
 
 class ItemController extends Controller
 {
@@ -96,5 +99,44 @@ class ItemController extends Controller
 
         // 保存後、詳細画面に戻る
         return back();
+    }
+    public function create()
+    {
+        // 出品画面の選択肢として使用するデータを取得
+        $categories = Category::all();
+        $conditions = Condition::all();
+
+        return view('items.create', compact('categories', 'conditions'));
+    }
+
+    /**
+     * 商品出品処理
+     */
+    public function store(ItemRequest $request)
+    {
+        // 1. 画像の保存処理
+        $img_path = null;
+        if ($request->hasFile('img_url')) {
+            $img_path = $request->file('img_url')->store('items', 'public');
+        }
+
+        // 2. itemsテーブルへの保存
+        $item = Item::create([
+            'user_id'     => Auth::id(),
+            'condition_id' => $request->condition_id,
+            'name'        => $request->name,
+            'brand'       => $request->brand,
+            'price'       => $request->price,
+            'description' => $request->description,
+            'img_url'     => $img_path,
+        ]);
+
+        // 3. 中間テーブル（category_item）への紐付け
+        if ($request->categories) {
+            $item->categories()->attach($request->categories);
+        }
+
+        // 出品完了後、トップページへ遷移（または詳細画面など）
+        return redirect()->route('item.index');
     }
 }
