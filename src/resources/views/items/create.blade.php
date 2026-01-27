@@ -33,11 +33,11 @@
                     </div>
                     <label class="item-create__image-label">
                         画像を選択する
-                        <input type="file" name="img_url" id="img_url" accept="image/*" onchange="previewImage(this)">
+                        <input type="file" name="image_url" id="img_url" accept="image/*" onchange="previewImage(this)">
                     </label>
                 </div>
                 <div class="item-create__error">
-                    @error('img_url')
+                    @error('image_url')
                     <p>{{ $message }}</p>
                     @enderror
                 </div>

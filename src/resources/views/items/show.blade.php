@@ -14,7 +14,7 @@
 <main class="item-detail">
     {{-- 左側：画像固定エリア --}}
     <div class="item-detail__left">
-        <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="main-image">
+        <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}" class="main-image">
     </div>
 
     {{-- 右側：スクロール情報エリア --}}

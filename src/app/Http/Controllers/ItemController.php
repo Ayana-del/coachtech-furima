@@ -115,9 +115,9 @@ class ItemController extends Controller
     public function store(ItemRequest $request)
     {
         // 1. 画像の保存処理
-        $img_path = null;
-        if ($request->hasFile('img_url')) {
-            $img_path = $request->file('img_url')->store('items', 'public');
+        $image_path = null;
+        if ($request->hasFile('image_url')) {
+            $image_path = $request->file('image_url')->store('items', 'public');
         }
 
         // 2. itemsテーブルへの保存
@@ -128,7 +128,7 @@ class ItemController extends Controller
             'brand'       => $request->brand,
             'price'       => $request->price,
             'description' => $request->description,
-            'img_url'     => $img_path,
+            'image_url'     => $image_path,
         ]);
 
         // 3. 中間テーブル（category_item）への紐付け
