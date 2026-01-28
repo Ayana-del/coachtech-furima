@@ -1,0 +1,237 @@
+/* 全体コンテナ */
+.item-create {
+    padding: 131px 0 100px;
+    /* Figma指示：上部131px */
+    background-color: #fff;
+}
+
+.item-create__content {
+    width: 680px;
+    margin: 0 auto;
+}
+
+/* ページタイトル */
+.item-create__heading h2 {
+    width: 680px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 43px;
+    /* Figma指示値：43px */
+    line-height: 100%;
+}
+
+/* セクション区切り */
+.item-create__section-title {
+    width: 680px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #5F5F5F;
+    border-bottom: 1px solid #5F5F5F;
+    padding-bottom: 12px;
+    margin-top: 40px;
+    margin-bottom: 36px;
+    /* Figma指示：下線から項目まで36px */
+    line-height: 100%;
+}
+
+/* ★重複解消：販売価格の見出しを非表示 */
+.item-create__section-title:nth-of-type(3) {
+    display: none;
+}
+
+/* 各グループのラベル */
+.item-create__group-title p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    /* Figma指示値：14px */
+    color: #000000;
+    margin-bottom: 12px;
+    /* ラベルと入力欄の間の余白 */
+}
+
+/* 商品画像アップロードエリア */
+.item-create__image-wrapper {
+    width: 680px;
+    height: 155px;
+    /* Figma Rectangle 17 準拠 */
+    border: 1px dashed #5F5F5F;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 40px;
+    /* 次の項目（カテゴリー）との余白 */
+}
+
+.item-create__image-preview img {
+    max-height: 130px;
+    display: none;
+}
+
+.item-create__image-label {
+    width: 165px;
+    height: 44px;
+    border: 2px solid #FF5555;
+    border-radius: 10px;
+    color: #FF5655;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #fff;
+}
+
+.item-create__image-label input {
+    display: none;
+}
+
+/* カテゴリーアイテム（Rectangle 39 準拠） */
+.item-create__category-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+    /* 次の項目（商品の状態）との余白 */
+}
+
+.item-create__category-item input {
+    display: none;
+}
+
+.item-create__category-item label {
+    display: inline-block;
+    width: 132px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border: 1px solid #FF5555;
+    border-radius: 20px;
+    background-color: #FFFFFF;
+    color: #FF5555;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.item-create__category-item input:checked+label {
+    background-color: #FF5555;
+    color: #FFFFFF;
+}
+
+/* 各グループ（商品名、ブランド名、価格など）間の余白設定 */
+.item-create__group {
+    margin-bottom: 40px;
+    /* Figmaにおける垂直方向の要素間隔 */
+}
+
+/* 商品の状態（Rectangle 21 準拠） */
+.item-create__select select {
+    width: 680px;
+    height: 45px;
+    /* Figma指示値：45px */
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    padding: 0 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000;
+    background-color: #fff;
+    outline: none;
+}
+
+/* 選択時の色（Rectangle 41） */
+.item-create__select select option:checked {
+    background-color: #5599EB;
+    color: #FFFFFF;
+}
+
+/* 入力フィールド共通（商品名・ブランド名・価格） */
+.item-create__input input,
+.item-create__input-price input {
+    width: 680px;
+    height: 45px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    padding: 0 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* 商品の説明（テキストエリア） */
+.item-create__textarea textarea {
+    width: 680px;
+    height: 161px;
+    /* Figma指示値：161px */
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    padding: 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+/* 販売価格の調整 */
+.item-create__input-price {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.price-unit {
+    position: absolute;
+    left: 15px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.item-create__input-price input {
+    padding-left: 35px;
+}
+
+/* 出品するボタン */
+.item-create__button {
+    margin-top: 60px;
+    /* 販売価格からボタンまでの余白を60pxに設定 */
+    margin-bottom: 100px;
+}
+
+.item-create__button-submit {
+    width: 680px;
+    height: 60px;
+    background-color: #FF5555;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    cursor: pointer;
+    line-height: 60px;
+}
+.item-create__error {
+    color: #FF5555;
+    /* 指定の赤色（ボタン色と統一） */
+    font-size: 14px;
+    /* ラベルと同じサイズで見やすく */
+    font-weight: 700;
+    margin-top: 8px;
+    /* 入力欄との隙間 */
+    display: block;
+    /* 必ず改行して表示 */
+    font-family: 'Inter', sans-serif;
+}

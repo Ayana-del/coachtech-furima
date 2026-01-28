@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\PurchaseController;
 
 // --- 1. 誰でも見れるルート ---
 //商品一覧画面
@@ -20,7 +21,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // マイページ
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
     // 商品購入画面（GET)
-    Route::get('/purchase/{item_id}', [ItemController::class, 'purchase'])->name('item.purchase');
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'showPurchasePage'])->name('item.purchase');
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'storePurchase'])->name('item.purchase.store');
     //出品
     Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
     Route::post('/sell', [ItemController::class, 'store'])->name('item.store');

@@ -1,38 +1,55 @@
 /* --- ベース・全体レイアウト --- */
 .item-detail {
     display: flex;
-    max-width: 1380px;
-    width: 95%;
-    margin: 175px auto 80px;
+    justify-content: center;
+    max-width: 1440px;
+    /* 690px × 2 = 1380px 前後 */
+    width: 100%;
+    margin: 131px auto 80px;
     background: #FFFFFF;
-    /* 全体の計算を内側に統一 */
     box-sizing: border-box;
 }
 
-/* 左カラム：画像エリア */
+/* 左カラム：画像エリア (Figma: 690px固定) */
 .item-detail__left {
-    flex: 0 0 50%;
-    /* 中身の突き抜け防止 */
+    flex: 0 0 690px;
+    padding-left: 45px;
+    /* Figma: 左から45pxの位置に画像を配置 */
+    padding-top: 36px;
+    /* Figma: 上から36px */
+    box-sizing: border-box;
     min-width: 0;
 }
 
-.main-image {
+/* 画像を囲む枠 (Figma: 600px × 600px) */
+.item-detail__image {
     width: 600px;
     height: 600px;
-    margin-top: 36px;
-    margin-left: 45px;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     border-radius: 4px;
-    object-fit: cover;
-    display: block;
-    /* 親(50%)の幅からマージン分を引いたサイズを上限にする（PCスクロール防止） */
-    max-width: calc(100% - 45px);
 }
 
-/* 右カラム：情報エリア */
+/* 画像自体の制御：ここで絶対固定します */
+.item-detail__image img {
+    width: 600px !important;
+    /* 強制的に600pxに固定 */
+    height: 600px !important;
+    /* 強制的に600pxに固定 */
+    object-fit: cover;
+    /* 正方形に切り取って表示 */
+    display: block;
+}
+
+/* 右カラム：情報エリア (Figma: 690px固定) */
 .item-detail__right {
-    flex: 0 0 50%;
+    flex: 0 0 690px;
     padding-left: 65px;
-    /* 重要：65pxの余白を「50%」の内側に含める（PCスクロール防止） */
+    /* 画像とテキストの間の余白 */
+    padding-top: 36px;
     box-sizing: border-box;
     min-width: 0;
 }
@@ -47,7 +64,7 @@
 
 .brand-name {
     font-size: 20px;
-    margin: 5px 0;
+    margin: 5px 0 15px;
 }
 
 .item-price {
@@ -61,6 +78,7 @@
     font-weight: 400;
 }
 
+/* アイコン・統計行 */
 .stats-row {
     display: flex;
     gap: 40px;
@@ -95,12 +113,13 @@
     margin-top: 5px;
 }
 
-/* ボタン類 */
+/* --- ボタン類 --- */
 .btn-purchase,
 .btn-comment {
     display: block;
     width: 100%;
     max-width: 570px;
+    /* 情報エリア内での最大幅 */
     height: 56px;
     background: #FF5555;
     color: #FFFFFF;
@@ -124,7 +143,7 @@
     cursor: pointer;
 }
 
-/* セクションタイトル */
+/* セクションタイトル (商品説明・商品の情報) */
 .section-title {
     max-width: 570px;
     width: 100%;
@@ -136,24 +155,48 @@
     box-sizing: border-box;
 }
 
-/* --- コメントエリア --- */
+.description-text {
+    font-size: 20px;
+    line-height: 1.6;
+    max-width: 570px;
+}
+
+/* カテゴリータグ */
+.category-tag {
+    background-color: #E0E0E0;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+* --- コメントエリア全体 --- */ .comment-list {
+    margin-top: 30px;
+    max-width: 570px;
+}
+
 .comment-item {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    /* 項目ごとの余白を広げる */
 }
 
+/* ユーザーアイコン */
 .comment-user-image {
-    flex: 0 0 70px;
-    height: 70px;
-    margin-right: 18px;
+    flex: 0 0 60px;
+    /* アイコンを少し大きく */
+    height: 60px;
+    margin-right: 20px;
 }
 
 .user-icon,
 .default-user-icon {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .default-user-icon {
@@ -161,84 +204,75 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
+    font-size: 30px;
     color: #FFFFFF;
 }
 
+/* ユーザー名：24pxに設定 */
 .comment-user-name {
-    font-size: 30px;
+    font-size: 24px;
+    /* ここを大きく */
     font-weight: 700;
+    color: #000000;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    /* 吹き出しとの間隔 */
 }
 
+/* コメント吹き出し：24pxに設定 */
 .comment-bubble {
     width: 100%;
-    max-width: 482px;
+    max-width: 570px;
+    /* 横幅を広げる */
     background: #F5F5F5;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 24px;
+    /* ここを大きく */
+    line-height: 1.5;
     box-sizing: border-box;
 }
 
+/* 入力エリアの見出し */
+.post-title {
+    font-size: 28px;
+    /* 「商品へのコメント」のサイズ */
+    font-weight: 700;
+    margin: 50px 0 20px;
+}
+
+/* テキストエリア */
 .comment-textarea {
     width: 100%;
     max-width: 570px;
     height: 246px;
+    /* Figma: 246px */
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 4px;
+    padding: 15px;
+    font-size: 20px;
+    /* 入力中の文字も見やすく */
     box-sizing: border-box;
 }
-/* ==========================================
-   追加：PC・タブレット対応コード
-   ========================================== */
-
-/* 1. PC (1540px以下) 対応 */
-@media screen and (max-width: 1540px) {
-    .item-detail {
-        width: 100%;
-        /* 95%だと余白計算が複雑になるため100%にフィット */
-    }
-
-    /* 画像が50%の枠を突き破らないように制限（配置数値は維持） */
-    .main-image {
-        max-width: calc(100% - 45px);
-        height: auto;
-    }
-
-    /* 右側の各パーツが50%の枠を突き破らないように制限 */
-    .btn-purchase,
-    .btn-comment,
-    .section-title,
-    .comment-textarea,
-    .comment-bubble {
-        max-width: 100%;
-    }
+.info-row {
+    display: flex;
+    align-items: center;
+    /* 縦方向の中央揃え */
+    margin-bottom: 25px;
+    /* 行間の余白をしっかり取る */
 }
 
-/* 2. タブレット (850px以下) 対応 */
-@media screen and (max-width: 850px) {
-    .item-detail {
-        flex-direction: column;
-        /* 100%表示のため縦並びに切り替え */
-    }
-
-    .item-detail__left,
-    .item-detail__right {
-        flex: 0 0 auto;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    /* 縦並びになっても元の配置数値を維持 */
-    .main-image {
-        max-width: calc(100% - 45px);
-    }
-
-    .item-detail__right {
-        padding-left: 65px;
-        /* 元の数値を維持 */
-    }
+/* 「カテゴリー」「商品の状態」のラベル文字 */
+.info-label {
+    flex: 0 0 150px;
+    /* ラベルの幅を固定して、右側の値を縦に揃える */
+    font-size: 24px;
+    /* ご指定のサイズ */
+    font-weight: 700;
+    color: #000000;
+}
+.info-value {
+    font-size: 24px;
+    /* ご指定のサイズ */
+    color: #000000;
 }

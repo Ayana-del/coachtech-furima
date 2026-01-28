@@ -8,7 +8,7 @@
 
 @section('title', '商品の出品')
 
-@section('styles')
+@section('css')
 <link rel="stylesheet" href="{{ asset('css/items/create.css') }}">
 @endsection
 
@@ -19,7 +19,7 @@
             <h2>商品の出品</h2>
         </div>
 
-        <form class="item-create__form" action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="item-create__form" action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
 
             {{-- 商品画像 --}}
@@ -37,12 +37,11 @@
                     </label>
                 </div>
                 <div class="item-create__error">
-                    @error('image_url')
-                    <p>{{ $message }}</p>
-                    @enderror
+                    @error('image_url') <p>{{ $message }}</p> @enderror
                 </div>
             </div>
 
+            {{-- 商品の詳細セクション --}}
             <div class="item-create__section">
                 <h3 class="item-create__section-title">商品の詳細</h3>
 
@@ -60,9 +59,7 @@
                         @endforeach
                     </div>
                     <div class="item-create__error">
-                        @error('categories')
-                        <p>{{ $message }}</p>
-                        @enderror
+                        @error('categories') <p>{{ $message }}</p> @enderror
                     </div>
                 </div>
 
@@ -75,18 +72,19 @@
                         <select name="condition_id">
                             <option value="" selected disabled>選択してください</option>
                             @foreach($conditions as $condition)
-                            <option value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'selected' : '' }}>{{ $condition->condition }}</option>
+                            <option value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'selected' : '' }}>
+                                {{ $condition->name }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="item-create__error">
-                        @error('condition_id')
-                        <p>{{ $message }}</p>
-                        @enderror
+                        @error('condition_id') <p>{{ $message }}</p> @enderror
                     </div>
                 </div>
             </div>
 
+            {{-- 商品名と説明セクション（ブランド名・価格も統合） --}}
             <div class="item-create__section">
                 <h3 class="item-create__section-title">商品名と説明</h3>
 
@@ -99,9 +97,20 @@
                         <input type="text" name="name" value="{{ old('name') }}">
                     </div>
                     <div class="item-create__error">
-                        @error('name')
-                        <p>{{ $message }}</p>
-                        @enderror
+                        @error('name') <p>{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
+                {{-- ブランド名（追加修正箇所） --}}
+                <div class="item-create__group">
+                    <div class="item-create__group-title">
+                        <p>ブランド名</p>
+                    </div>
+                    <div class="item-create__input">
+                        <input type="text" name="brand" value="{{ old('brand') }}">
+                    </div>
+                    <div class="item-create__error">
+                        @error('brand') <p>{{ $message }}</p> @enderror
                     </div>
                 </div>
 
@@ -114,15 +123,9 @@
                         <textarea name="description">{{ old('description') }}</textarea>
                     </div>
                     <div class="item-create__error">
-                        @error('description')
-                        <p>{{ $message }}</p>
-                        @enderror
+                        @error('description') <p>{{ $message }}</p> @enderror
                     </div>
                 </div>
-            </div>
-
-            <div class="item-create__section">
-                <h3 class="item-create__section-title">販売価格</h3>
 
                 {{-- 販売価格 --}}
                 <div class="item-create__group">
@@ -134,9 +137,7 @@
                         <input type="number" name="price" value="{{ old('price') }}">
                     </div>
                     <div class="item-create__error">
-                        @error('price')
-                        <p>{{ $message }}</p>
-                        @enderror
+                        @error('price') <p>{{ $message }}</p> @enderror
                     </div>
                 </div>
             </div>

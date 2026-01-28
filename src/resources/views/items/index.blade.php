@@ -25,7 +25,7 @@
         {{-- 外側のdivを消すか、別の名前にして aタグをメインにします --}}
         <a href="{{ route('item.show', ['item_id' => $item->id]) }}" class="item-item">
             <div class="item-image">
-                <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
+                <img src="{{ str_starts_with($item->image_url, 'http') ? $item->image_url : asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
                 @if($item->is_sold)
                 <div class="sold-label">Sold</div>
                 @endif
