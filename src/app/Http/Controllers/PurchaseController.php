@@ -2,32 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PurchaseRequest;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
+
     public function showPurchasePage($item_id)
     {
         $item = Item::findOrFail($item_id);
 
-        return view('purchase.index', compact('item'));
+        $user = Auth::user();
+        $profile = $user->profile;
+
+        return view('purchases.index', compact('item', 'profile'));
     }
 
     /**
-     * 購入処理を実行する
+     * 商品購入処理
      */
-    public function storePurchase(Request $request, $item_id)
+    public function storePurchase(PurchaseRequest $request, $item_id)
     {
-        // 1. 商品の存在確認
         $item = Item::findOrFail($item_id);
-
-        // 2. バリデーション（支払い方法の選択など）
-        $request->validate([
-            'payment_method' => 'required', // 支払い方法は必須
-        ], [
-            'payment_method.required' => '支払い方法を選択してください',
-        ]);
 
         return redirect()->route('item.index')->with('message', '購入が完了しました');
     }

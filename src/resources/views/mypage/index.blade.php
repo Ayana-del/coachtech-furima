@@ -1,11 +1,5 @@
 @extends('layouts.common')
 
-@section('search')
-<form action="{{ route('item.index') }}" method="get" class="header-search-form">
-    <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="なにをお探しですか？">
-</form>
-@endsection
-
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/item/index.css') }}">
 <link rel="stylesheet" href="{{ asset('css/mypage/index.css') }}">
@@ -14,7 +8,7 @@
 @section('content')
 <div class="item-page">
 
-    {{-- ユーザー情報セクション --}}
+    {{-- ユーザー情報セクション (変更なし) --}}
     <div class="mypage-user-section">
         <div class="user-info-container">
             <div class="user-image-wrapper">
@@ -39,7 +33,7 @@
         <p class="tab-item" id="tab-buy">購入した商品</p>
     </div>
 
-    {{-- 出品した商品一覧 (初期表示) --}}
+    {{-- 出品した商品一覧 --}}
     <div id="sell-items" class="item-grid">
         @forelse($sellItems as $item)
         <a href="{{ route('item.show', ['item_id' => $item->id]) }}" class="item-item">
@@ -56,7 +50,7 @@
         @endforelse
     </div>
 
-    {{-- 購入した商品一覧 (初期は非表示) --}}
+    {{-- 購入した商品一覧 --}}
     <div id="buy-items" class="item-grid" style="display: none;">
         @forelse($buyItems as $item)
         <a href="{{ route('item.show', ['item_id' => $item->id]) }}" class="item-item">
@@ -82,19 +76,50 @@
         const sellItems = document.getElementById('sell-items');
         const buyItems = document.getElementById('buy-items');
 
-        tabSell.addEventListener('click', () => {
+        // ヘッダーの検索窓とその隠しフィールドを取得
+        const searchForm = document.getElementById('search-form'); // common側でformにid="search-form"が必要
+        const searchTabInput = document.getElementById('search-tab');
+
+        // 現在どのタブが選ばれているかを保持する変数（初期値はURLから取得、なければsell）
+        const urlParams = new URLSearchParams(window.location.search);
+        let activeTab = urlParams.get('tab') || 'sell';
+
+        function showSell() {
             tabSell.classList.add('active');
             tabBuy.classList.remove('active');
             sellItems.style.display = 'grid';
             buyItems.style.display = 'none';
-        });
+            activeTab = 'sell';
+            if (searchTabInput) searchTabInput.value = 'sell';
+        }
 
-        tabBuy.addEventListener('click', () => {
+        function showBuy() {
             tabBuy.classList.add('active');
             tabSell.classList.remove('active');
             buyItems.style.display = 'grid';
             sellItems.style.display = 'none';
-        });
+            activeTab = 'buy';
+            if (searchTabInput) searchTabInput.value = 'buy';
+        }
+
+        tabSell.addEventListener('click', showSell);
+        tabBuy.addEventListener('click', showBuy);
+
+        // 初期表示の切り替え
+        if (activeTab === 'buy') {
+            showBuy();
+        } else {
+            showSell();
+        }
+
+        // ★【最重要】フォーム送信時に現在のタブ情報を無理やりねじ込む
+        if (searchForm) {
+            searchForm.addEventListener('submit', function() {
+                if (searchTabInput) {
+                    searchTabInput.value = activeTab;
+                }
+            });
+        }
     });
 </script>
 @endsection

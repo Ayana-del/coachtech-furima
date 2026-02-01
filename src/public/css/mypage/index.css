@@ -1,4 +1,4 @@
-/* 1. リセットと基本構造（提示いただいた通り） */
+/* --- 1. リセットと基本構造 --- */
 *,
 *::before,
 *::after {
@@ -10,24 +10,24 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    background-color: #ffffff;
     overflow-x: hidden;
 }
 
 .item-page {
     width: 100%;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* 2. ユーザーセクション (1017px幅へ調整) */
-.mypage-user-section,
-.tab-container {
+/* --- 2. ユーザーセクション (1017px幅を維持) --- */
+.mypage-user-section {
+    width: 100%;
     max-width: 1017px;
-    /* Figma指示の数値 */
     margin: 60px auto 30px;
     padding: 0 20px;
     position: relative;
-    /* ボタンの右端固定のため追加 */
 }
 
 .user-info-container {
@@ -53,15 +53,12 @@ body {
 
 .user-name {
     font-size: 36px;
-    /* Figma指示サイズ */
     font-weight: bold;
     margin: 0;
     color: #000;
-    /* 黒文字 */
 }
 
 .profile-edit-btn {
-    /* 1. 指示されたサイズと見た目 */
     width: 310px;
     height: 59px;
     border-radius: 10px;
@@ -71,14 +68,10 @@ body {
     line-height: 100%;
     color: #FF5555;
     border: 1px solid #FF5555;
-
-    /* 2. 配置：テストユーザーと直線上に並べるための修正 */
     position: absolute;
-    right: 0;   /* 1017pxの親要素の右端に固定 */
-    top: 50%;   /* 親の高さの真ん中に持ってくる */
-    transform: translateY(-50%); /* 完全に垂直中央（名前の直線状）に合わせる */
-
-    /* 3. その他 */
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,94 +79,57 @@ body {
     background: transparent;
 }
 
-/* 3. タブメニュー (1017px幅) */
-/* 3. タブメニュー (1512pxの基準線) */
+/* --- 3. タブメニュー (下線を画面端まで通す修正) --- */
 .tab-container {
     width: 100%;
     height: 45px;
     margin: 60px 0 40px;
     position: relative;
-    max-width: 100%;
-    overflow: visible;
-    /* 1512pxの線を画面中央に配置（文字位置を壊さない） */
-}
-
-.tab-container::after {
-    content: "";
-    position: absolute;
-    /* 中央寄せの基準を修正 */
-    left: 0;
-    bottom: 0;
-
-    /* Figma指定の数値 */
-    width: 1512px;
-    height: 0px;
     border-bottom: 2px solid #5F5F5F;
-
-    /* 1512pxが画面より大きい場合に右に突き抜けないよう制限 */
-    max-width: 100%;
-
-    opacity: 1;
-    z-index: 1;
 }
 
-/* 1017pxのコンテンツエリアを基準に文字を配置 */
 .tab-inner {
     width: 1017px;
     margin: 0 auto;
     position: relative;
     height: 100%;
-    z-index: 2;
 }
 
 .tab-item {
     position: absolute;
     bottom: 0;
     cursor: pointer;
-
-    /* タイポグラフィ */
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 24px;
     line-height: 40px;
     white-space: nowrap;
-
-    /* 下線の設定：文字の幅(155px)に合わせて線を引く */
     width: 155px;
     text-align: left;
-    /* 文字は左端から開始 */
+    color: #5F5F5F;
+    text-decoration: none;
 }
 
-/* 出品した商品：左から129pxに文字の左端を固定 */
 #tab-sell {
     left: 129px;
 }
 
-#tab-sell.active {
-    color: #FF0000;
-    border-bottom: 3px solid #FF0000;
-    /* 文字位置から155pxの線 */
-}
-
-/* 購入した商品：左から336pxに文字の左端を固定 */
 #tab-buy {
     left: 336px;
-    color: #5F5F5F;
 }
 
-#tab-buy.active {
+.tab-item.active {
     color: #FF0000;
-    border-bottom: 3px solid #FF0000;
+    border-bottom: none;
 }
 
-/* 4. 商品一覧 (1374px幅へ調整) */
+/* --- 4. 商品一覧 (1374px幅を維持) --- */
 .item-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     width: 100%;
     max-width: 1374px;
-    /* Figma指示の数値に変更 */
     margin: 0 auto 100px;
     padding: 0 20px;
 }
@@ -198,10 +154,80 @@ body {
     object-fit: cover;
 }
 
-/* 商品名（あなたのコード通り黒文字） */
 .item-name {
     font-size: 16px;
     color: #000;
     text-align: left;
     margin: 0;
+}
+
+.no-items {
+    width: 100%;
+    max-width: 1374px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    text-align: left;
+}
+.user-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd;
+    /* 背景色をつけて円形を際立たせる */
+    color: #ffffff;
+    /* アイコンの色 */
+}
+
+.default-user-icon {
+    font-size: 80px;
+    /* 150pxの枠に対して適切なサイズに調整 */
+    line-height: 1;
+    user-select: none;
+    /* 選択不可にする */
+    display: block;
+}
+
+/* =============================================
+   追記：タブレット対応 (1024px以下)
+   PCのデザインを崩さず、はみ出しのみを上書き解決
+   ============================================= */
+@media screen and (max-width: 1024px) {
+
+    /* 固定幅(1017px)を解除して画面内に収める */
+    .mypage-user-section,
+    .tab-inner {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* プロフィールボタン：絶対配置だと名前に被るので、中央下部に逃がす */
+    .mypage-user-section {
+        padding-bottom: 80px;
+    }
+
+    .profile-edit-btn {
+        top: auto;
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        width: 90%;
+        max-width: 310px;
+    }
+
+    /* タブの配置：固定値(129px等)を%に変えて、狭い画面でも左右に散らす */
+    #tab-sell {
+        left: 10%;
+    }
+
+    #tab-buy {
+        left: 50%;
+    }
+
+    /* 商品グリッドを2列に（商品一覧画面と同じ挙動） */
+    .item-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

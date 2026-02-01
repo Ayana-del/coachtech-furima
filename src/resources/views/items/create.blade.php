@@ -1,11 +1,5 @@
 @extends('layouts.common')
 
-@section('search')
-<form action="{{ route('item.index') }}" method="get" class="header-search-form">
-    <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="なにをお探しですか？">
-</form>
-@endsection
-
 @section('title', '商品の出品')
 
 @section('css')
@@ -141,7 +135,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="item-create__button">
                 <button class="item-create__button-submit" type="submit">出品する</button>
             </div>

@@ -5,10 +5,18 @@
     box-sizing: border-box;
 }
 
+/* 物理的な横スクロール禁止 */
+html,
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
+    /* 修正ポイント：ヘッダーの黒が画面端まで届くように背景を設定 */
+    background: linear-gradient(to bottom, #000000 80px, #ffffff 80px);
     min-width: 1512px;
-    background-color: #ffffff;
 }
 
 /* ヘッダー本体 (Figma: 1512 × 80) */
@@ -20,7 +28,8 @@ body {
     position: relative;
 }
 
-/* 1. ロゴエリア (Figma: 370 × 36 / x=37, y=20) */
+/* --- ここから下の数値は一切崩さず完全維持 --- */
+
 .header__logo {
     position: absolute;
     left: 37px;
@@ -35,31 +44,32 @@ body {
     display: block;
 }
 
-/* 2. 検索エリア (Figma: 563 × 80 / 開始位置 x=450前後) */
-/* 検索ボックス(563px)という「透明な箱」を先に配置し、その中で入力を中央に置きます */
 .header__search {
     position: absolute;
-    left: 450px;
-    /* ロゴの右端(37+370=407)から43px離れた位置に固定 */
+    left: 475px;
     width: 563px;
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* 563pxの枠内の中心に入力窓を配置 */
 }
 
-.header-search-form input {
+.header__search form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.header__search input[type="text"] {
     width: 445px;
-    /* 入力窓自体のFigma指定幅 */
     height: 35px;
     border-radius: 4px;
     border: none;
     padding: 0 15px;
     font-size: 14px;
+    outline: none;
 }
 
-/* 3. ナビゲーションエリア (Figma: 463 × 80 / x=1049) */
 .header-nav {
     position: absolute;
     left: 1049px;
@@ -74,24 +84,22 @@ body {
     height: 100%;
     list-style: none;
     align-items: center;
-    /* 463pxの内側で、各メニューの間隔をFigmaの見た目に合わせる */
     padding: 0 37px;
     justify-content: space-between;
 }
 
-/* テキスト・ボタン共通 */
 .header-nav__link,
 .header-nav__button {
     text-decoration: none;
     color: #FFFFFF;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 700;
     white-space: nowrap;
     background: none;
     border: none;
+    cursor: pointer;
 }
 
-/* 4. 出品ボタン (Figma: 100 × 50 / border-radius 4) */
 .header-nav__item:last-child .header-nav__link {
     background-color: #FFFFFF;
     color: #000000;
@@ -101,4 +109,22 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 4px;
+}
+
+/* --- レスポンシブ対応 (デザインを縮小して画面に収める) --- */
+
+/* タブレット (768px - 850px) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    body {
+        zoom: 0.5;
+        min-width: auto;
+    }
+}
+
+/* パソコン (1400px - 1540px) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    body {
+        zoom: 0.93;
+        min-width: auto;
+    }
 }

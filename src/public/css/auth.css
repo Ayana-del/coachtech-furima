@@ -1,172 +1,178 @@
-@media screen and (min-width: 768px) and (max-width: 1540px) {
-    .auth__content {
-        max-width: 680px;
-        margin: 50px auto;
-    }
+/* =============================================
+認証系（ログイン・登録・メール認証）統合CSS
+   ============================================= */
 
-    .header {
-        background-color: #000000;
-        height: 82px;
-        display: flex;
-        align-items: center;
-    }
-
-    .auth__heading h2 {
-        font-size: 36px;
-        text-align: center;
-        margin-bottom: 40px;
-    }
-
-    .form__label--item {
-        display: inline-block;
-        color: #000000;
-        padding: 5px 20px;
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .form__input--text input {
-        width: 100%;
-        height: 59px;
-        border: 1px solid #5F5F5F;
-        border-radius: 4px;
-        padding: 0 15px;
-        box-sizing: border-box;
-    }
-
-    .form__group {
-        margin-bottom: 30px;
-    }
-    .form__error {
-        color: #ff4b4b;
-        font-size: 14px;
-        margin-top: 5px;
-        min-height: 20px;
-    }
-    .form__button {
-        margin-top: 40px;
-        text-align: center;
-    }
-
-    .form__button-submit {
-        background-color: #FF5555;
-        border-radius: 5px;
-        height: 65px;
-
-        width: 100%;
-        max-width: 680px;
-        border: none;
-        color: #ffffff;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    .auth__link {
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .auth__link a {
-        font-family: Inter;
-        font-weight: 400;
-        font-style: Regular;
-        font-size: 20px;
-        color:#0073CC;
-        leading-trim: NONE;
-        line-height: 100%;
-        letter-spacing: 0%;
-        text-align: center;
-        vertical-align: middle;
-    }
-
-    .auth__link a:hover {
-        border-bottom: 2px solid #0073CC;
-    }
+/* 1. 基本設定：フォントと背景の統一 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #ffffff;
+    overflow-x: hidden;
 }
 
+/* 全ての入力要素にInterフォントを強制適用 */
+body,
+input,
+button,
+textarea,
+select {
+    font-family: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* 2. 認証フォーム共通 (ログイン・会員登録) */
+.auth {
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.auth__content {
+    width: 680px;
+    /* PCデザイン固定幅 */
+    margin: 80px auto;
+    padding: 0;
+}
+
+.auth__heading h2 {
+    font-weight: 700;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 60px;
+    color: #000000;
+}
+
+.form__group {
+    margin-bottom: 30px;
+}
+
+.form__label--item {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #000000;
+}
+
+/* 入力欄：Interフォントを明示的に適用 */
+.form__input--text input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    padding: 0 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #000000;
+    background-color: #ffffff;
+    outline: none;
+}
+
+.form__button-submit {
+    width: 100%;
+    height: 60px;
+    background-color: #FF5555;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.auth__link {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.auth__link a {
+    color: #0073CC;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* 3. メール認証待ち画面 (Verify) - デザイン復元 */
 .verify-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    /* 画面の高さ一杯を使って中央配置 */
+    min-height: 80vh;
     width: 100%;
+    padding: 20px;
 }
+
 .verify-content {
-    /* Figmaの座標に基づき、中央付近に要素を配置 */
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 720px;
-    /* テキストの幅に合わせる */
+    width: 100%;
+    max-width: 720px;
+    /* PCデザイン固定幅 */
 }
+
 .verify-text {
-    width: 720px;
-    height: 58px;
-    font-family: 'Inter', sans-serif;
+    width: 100%;
+    min-height: 58px;
     font-weight: 700;
     font-size: 24px;
-    line-height: 100%;
+    line-height: 1.4;
     text-align: center;
     color: #000000;
     margin-bottom: 82px;
-    /* top 319px と 459px の差分を考慮 */
 }
-/* auth.css */
 
 .btn-verify {
-    /* 1. ここが重要：ただのリンク(aタグ)を「箱（ボタン）」に変えます */
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* 2. Figmaのサイズを適用 */
     width: 200px;
     height: 50px;
-
-    margin-top: 30px;
     margin-bottom: 72px;
-
-    /* 3. 背景色と文字色 */
     background-color: #D9D9D9;
     color: #000000;
     border: 1px solid #000000;
-
-    /* 4. その他Figmaの指定 */
-    font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 24px;
-    line-height: 1;
     text-decoration: none;
-    /* リンクの下線を消す */
     border-radius: 2px;
 }
 
-/* 認証メールを再送する リンク */
 .link-resend {
     display: inline-block;
-    width: 257px;
-    height: 53.29px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
     font-size: 20px;
-    line-height: 100%;
-    text-align: center;
-    vertical-align: middle;
     color: #0073CC;
     text-decoration: underline;
-    /* リンクとして分かりやすくするため追加 */
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
 }
 
-/* セッションメッセージのスタイル（任意） */
-.status-message {
-    margin-top: 20px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #28a745;
+/* =============================================
+   レスポンシブ：タブレット (1024px以下)
+   ============================================= */
+@media screen and (max-width: 1024px) {
+    .auth__content {
+        width: 100%;
+        max-width: 680px;
+        padding: 0 20px;
+    }
+
+    .auth__heading h2 {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    .verify-text {
+        font-size: 20px;
+        margin-bottom: 60px;
+    }
+
+    .btn-verify {
+        margin-bottom: 50px;
+    }
 }

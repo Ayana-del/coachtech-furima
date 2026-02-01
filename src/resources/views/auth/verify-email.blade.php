@@ -13,9 +13,10 @@
         </p>
 
         <div class="verify-action">
-            <span class="btn-verify">
+            {{-- 直接 MailHog の Web UI を開くリンクに変更 --}}
+            <a href="http://localhost:8025" target="_blank" class="btn-verify">
                 認証はこちらから
-            </span>
+            </a>
         </div>
 
         <form method="POST" action="{{ route('verification.send') }}" id="resend-form">

@@ -1,3 +1,4 @@
+/* --- 成功・エラーメッセージ --- */
 .success-message {
     text-align: center;
     color: #2497ff;
@@ -7,29 +8,27 @@
     max-width: 600px;
 }
 
-/* バリデーションエラーメッセージ用 */
 .form__error {
     color: #e3342f;
     font-size: 0.875rem;
     margin-top: 0.25rem;
 }
 
+/* --- コンテンツ全体 --- */
 .profile__content {
     width: 100%;
     max-width: 1512px;
     margin: 0 auto;
     padding-top: 139px;
-    /* デザインの top: 139px */
     position: relative;
     padding-bottom: 100px;
 }
 
+/* --- 見出し：PCデザイン死守 --- */
 .profile__heading h2 {
     width: 100%;
     max-width: 680px;
-    /* フォームの幅に合わせる */
     margin: 0 auto 47px;
-    /* left: 606px 相当の中央寄せ */
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 36px;
@@ -38,6 +37,7 @@
     text-align: center;
 }
 
+/* --- プロフィール画像エリア --- */
 .profile-image__flex {
     display: flex;
     align-items: center;
@@ -56,13 +56,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .profile__content .default-emoji {
-    display: block;
+    font-size: 80px;
     line-height: 1;
-    margin: 0;
-    padding: 0;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile__content .user-icon {
@@ -94,13 +97,21 @@
     display: none;
 }
 
+/* --- フォーム共通 --- */
 .form {
     width: 680px;
     margin: 0 auto;
 }
 
+/* 通常のグループ余白 */
 .form__group {
     margin-bottom: 25px;
+}
+
+/* ★出品画面の販売価格など、ボタンの直前のグループに適用する広い余白 */
+.form__group--last {
+    margin-bottom: 90px;
+    /* 1枚目のスクショに合わせた大きな余白 */
 }
 
 .form__label--item {
@@ -118,8 +129,10 @@
     border-radius: 4px;
     padding: 0 15px;
     font-size: 16px;
+    box-sizing: border-box;
 }
 
+/* --- 送信ボタン --- */
 .form__button-submit {
     width: 680px;
     height: 60px;
@@ -131,37 +144,48 @@
     font-weight: 700;
     font-size: 18px;
     cursor: pointer;
-    margin-top: 67px;
+    /* ボタンの上の余白は基本的にグループの margin-bottom で制御 */
     transition: 0.3s;
+}
+
+/* プロフィール設定用の個別マージン調整が必要な場合 */
+.profile__content .form__button-submit {
+    margin-top: 67px;
 }
 
 .form__button-submit:hover {
     opacity: 0.8;
 }
 
-/* --- レスポンシブ対応 --- */
-
-/* タブレット (768px - 850px) */
-@media screen and (max-width: 850px) {
+/* =============================================
+   追記：レスポンシブ対応 (1024px以下)
+   ============================================= */
+@media screen and (max-width: 1024px) {
     .profile__content {
         padding-top: 80px;
     }
 
-    .profile__heading h2 {
-        font-size: 28px;
-    }
-
     .form,
     .profile-image__flex,
+    .profile__heading h2 {
+        width: 100%;
+        max-width: 680px;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
     .form__input--text input,
     .form__button-submit {
-        width: 90%;
-        /* 画面幅に収める */
-        max-width: 600px;
+        width: 100%;
     }
 
     .profile-image__flex {
-        flex-direction: column;
         gap: 20px;
+        justify-content: center;
+    }
+
+    /* タブレット時は余白を少し詰め、バランスを調整 */
+    .form__group--last {
+        margin-bottom: 60px;
     }
 }

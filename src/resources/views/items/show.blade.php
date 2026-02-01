@@ -1,11 +1,5 @@
 @extends('layouts.common')
 
-@section('search')
-<form action="{{ route('item.index') }}" method="get" class="header-search-form" novalidate>
-    <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="なにをお探しですか？">
-</form>
-@endsection
-
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/items/show.css') }}">
 @endsection
@@ -19,7 +13,7 @@
         </div>
     </div>
 
-        {{-- 右側：スクロール情報エリア --}}
+    {{-- 右側：スクロール情報エリア --}}
     <div class="item-detail__right">
         {{-- 商品タイトル・金額 --}}
         <section class="item-header">

@@ -1,11 +1,5 @@
 @extends('layouts.common')
 
-@section('search')
-<form action="{{ route('item.index') }}" method="get" class="header-search-form">
-    <input type="text" name="keyword" value="{{ $keyword ?? '' }}" placeholder="なにをお探しですか？">
-</form>
-@endsection
-
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/items/index.css') }}">
 @endsection

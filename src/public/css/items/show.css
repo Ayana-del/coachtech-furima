@@ -276,3 +276,46 @@
     /* ご指定のサイズ */
     color: #000000;
 }
+@media screen and (max-width: 1024px) {
+
+    /* --- すでにある商品一覧の記述 --- */
+    .item-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tab-item:first-child {
+        left: 5%;
+    }
+
+    .tab-item:last-child {
+        left: 200px;
+    }
+
+    /* --- ここから詳細画面用の追記（!importantなし） --- */
+
+    /* 左右の固定690pxを解除して、画面内に収める */
+    .item-detail__left,
+    .item-detail__right {
+        flex: 1;
+        padding-left: 20px;
+    }
+
+    /* 画像の固定600pxを解除して、枠に合わせる */
+    .item-detail__image,
+    .item-detail__image img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    /* ボタンなどの570px制限を解除して、はみ出しを防ぐ */
+    .btn-purchase,
+    .btn-comment,
+    .section-title,
+    .description-text,
+    .comment-list,
+    .comment-textarea,
+    .comment-bubble {
+        max-width: 100%;
+    }
+}

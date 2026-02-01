@@ -16,28 +16,34 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
-        $tab = $request->query('tab');
+        $tab = $request->query('tab', 'recommend');
         $keyword = $request->query('keyword');
 
         $query = Item::query();
 
+        // 自分の出品した商品は表示しない
         if (Auth::check()) {
             $query->where('user_id', '!=', Auth::id());
         }
 
+        // キーワード検索：タブの状態に関わらず適用
         if ($keyword) {
             $query->where('name', 'LIKE', "%{$keyword}%");
         }
 
+        // タブによる絞り込み
         if ($tab === 'mylist') {
             if (Auth::check()) {
+                // マイリスト（自分がいいねした商品）かつ検索ワードに一致するもの
                 $query->whereHas('likes', function ($q) {
                     $q->where('user_id', Auth::id());
                 });
             } else {
+                // 未ログイン時にマイリストタブを選択した場合は何も表示しない
                 $query->whereRaw('1 = 0');
             }
         }
+        // $tab が 'recommend' の場合は、追加の whereHas を行わず全件（+キーワード）を表示
 
         $items = $query->get();
 

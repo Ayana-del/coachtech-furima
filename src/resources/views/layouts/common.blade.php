@@ -16,9 +16,34 @@
                     <img src="{{ asset('img/COACHTECH_hederlogo.png') }}" alt="COACHTECH">
                 </a>
             </h1>
+
+            {{-- 検索エリア --}}
             <div class="header__search">
-                @yield('search')
+                @if (!Route::is(['register', 'login', 'verification.notice']))
+                @php
+                $isMypage = Request::is('mypage*');
+                $searchAction = $isMypage ? '/mypage' : route('item.index');
+
+                // 現在のURLにある 'tab' を取得。なければデフォルトを設定
+                $currentTab = request()->get('tab');
+                if (empty($currentTab)) {
+                $currentTab = $isMypage ? 'sell' : 'recommend';
+                }
+                @endphp
+
+                {{--
+                    修正ポイント: 
+                    1. マイページ側のJSから制御するために form に id="search-form" を付与
+                    2. 隠し入力フィールドに id="search-tab" を付与
+                --}}
+                <form action="{{ $searchAction }}" method="GET" id="search-form">
+                    <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="何をお探しですか？">
+
+                    <input type="hidden" name="tab" id="search-tab" value="{{ $currentTab }}">
+                </form>
+                @endif
             </div>
+
             <nav class="header-nav">
                 <ul class="header-nav__list">
                     @guest
@@ -43,7 +68,6 @@
                             <button class="header-nav__button">ログアウト</button>
                         </form>
                     </li>
-                    {{-- ログイン後は「マイページ」に移動する設定でOKです（ルートを後で作る場合） --}}
                     <li class="header-nav__item">
                         <a href="/mypage" class="header-nav__link">マイページ</a>
                     </li>

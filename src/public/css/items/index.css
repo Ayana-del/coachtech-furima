@@ -1,71 +1,94 @@
-.item-page {
-    width: 1512px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    min-height: 100vh;
+/* 1. 全体のリセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* 2. 商品一覧ページ全体 */
+.item-page {
+    width: 100%;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 3. タブコンテナ */
 .tab-container {
     width: 100%;
-    height: 47px;
+    height: 40px;
     margin-top: 47px;
-    padding-left: 69px;
-    display: flex;
-    gap: 40px;
-    border-bottom: 1px solid #E5E5E5;
-    box-sizing: border-box;
-    align-items: center;
+    position: relative;
+    border-bottom: 1px solid #000000;
+}
+
+.tab-inner {
+    /* 固定幅を解除し、最大幅に設定 */
+    width: 100%;
+    max-width: 1512px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
 }
 
 .tab-item {
+    position: absolute;
+    width: 155px;
+    height: 40px;
     text-decoration: none;
-    color: #000000;
     font-size: 16px;
     font-weight: bold;
-    height: 100%;
     display: flex;
     align-items: center;
-    position: relative;
+    justify-content: center;
+    color: #000000;
     cursor: pointer;
+}
+
+.tab-item:first-child {
+    left: 129px;
+}
+
+.tab-item:last-child {
+    left: 336px;
 }
 
 .tab-item.active {
     color: #FF4D4D;
 }
 
-.tab-item.active::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: #FF4D4D;
-}
-
+/* 4. 商品グリッド */
 .item-grid {
-    width: 1374.5px;
-    margin: 76px 0 0 69px;
+    /* 固定幅を解除し、最大幅に設定 */
+    width: 95%;
+    max-width: 1374.5px;
+    margin: 76px auto 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 290px);
-    justify-content: space-between;
+    /* デフォルト（PC）は4列。1frで幅を自動調整 */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
     row-gap: 76px;
 }
 
+/* 5. 商品アイテム */
 .item-item {
-    width: 290px;
-    height: 320px;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    /* 親のグリッドセルに合わせる */
+    max-width: 290px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
 }
 
 .item-image {
-    position: relative;
-    width: 290px;
-    height: 290px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* 正方形を維持 */
     background-color: #D9D9D9;
-    border-radius: 0;
-    overflow: hidden;
 }
 
 .item-image img {
@@ -74,70 +97,33 @@
     object-fit: cover;
 }
 
-.item-name {
+.item-page .item-grid .item-item .item-name {
     margin-top: 10px;
     font-size: 16px;
     color: #000000;
     font-weight: 500;
+    text-decoration: none;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.sold-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(191, 45, 45, 0.9);
-    color: #ffffff;
-    padding: 4px 12px;
-    font-weight: bold;
-    font-size: 14px;
-    z-index: 5;
-}
+/* =============================================
+   タブレット対応 (768px - 1024px付近)
+   ============================================= */
+@media screen and (max-width: 1024px) {
 
-.item-grid a.item-item {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-}
-
-.item-grid a.item-item:hover,
-.item-grid a.item-item:visited,
-.item-grid a.item-item:active {
-    text-decoration: none;
-    color: #000000;
-}
-
-.item-name {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #000000;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-}
-
-/* --- レスポンシブ対応 --- */
-@media screen and (max-width: 1512px) {
-    .item-page {
-        width: 100%;
-    }
-}
-@media screen and (max-width: 850px) {
-    .tab-container {
-        padding-left: 20px;
-    }
-
+    /* 商品を2列に変更して、はみ出しを防止 */
     .item-grid {
-        width: 100%;
-        margin: 40px 0 0 0;
-        padding: 0 20px;
-        grid-template-columns: repeat(auto-fill, 290px);
-        justify-content: center;
-        box-sizing: border-box;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* タブの左余白を画面幅に合わせて微調整 */
+    .tab-item:first-child {
+        left: 5%;
+    }
+
+    .tab-item:last-child {
+        left: 200px;
     }
 }
