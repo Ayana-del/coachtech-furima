@@ -17,16 +17,21 @@ class PurchaseController extends Controller
         $user = Auth::user();
         $profile = $user->profile;
 
-        return view('purchases.index', compact('item', 'profile'));
+        return view('purchases.show', compact('item', 'profile'));
     }
 
-    /**
-     * 商品購入処理
-     */
     public function storePurchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
 
+        // 1. 注文情報をデータベースに保存（これが重要！）
+        \App\Models\Order::create([
+            'user_id' => Auth::id(),
+            'item_id' => $item->id,
+            'payment_method' => $request->payment_method,
+        ]);
+
+        // 購入完了後、商品一覧へ
         return redirect()->route('item.index')->with('message', '購入が完了しました');
     }
 }

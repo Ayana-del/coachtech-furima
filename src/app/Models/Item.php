@@ -46,7 +46,7 @@ class Item extends Model
     }
     public function orders()
     {
-        return $this->hasMany(Order::class, 'item_id');
+        return $this->hasOne(Order::class, 'item_id');
     }
     public function getIsSoldAttribute()
     {

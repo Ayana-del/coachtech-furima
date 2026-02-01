@@ -1,7 +1,5 @@
 @extends('layouts.common')
 
-@section('title', '商品の購入')
-
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/purchases/index.css') }}">
 @endsection
@@ -9,9 +7,8 @@
 @section('content')
 <div class="purchase">
     <div class="purchase__container">
-        {{-- 左側：入力エリア --}}
         <div class="purchase__main">
-            {{-- 商品概要 --}}
+            {{-- 商品情報 --}}
             <div class="purchase__item">
                 <div class="purchase__item-img">
                     <img src="{{ asset($item->image_url) }}" alt="{{ $item->name }}">
@@ -22,36 +19,44 @@
                 </div>
             </div>
 
-            {{-- 支払い方法選択 (ID11) --}}
+            {{-- 支払い方法 --}}
             <div class="purchase__group">
                 <div class="purchase__group-header">
                     <h3>支払い方法</h3>
-                    {{-- 現状の要件に合わせてリンク先は適宜調整してください --}}
                 </div>
                 <div class="purchase__select">
                     <select name="payment_method" id="payment_select" form="purchase-form">
                         <option value="" disabled selected>選択してください</option>
-                        <option value="konbini">コンビニ払い</option>
-                        <option value="card">カード支払い</option>
+                        <option value="コンビニ払い">コンビニ払い</option>
+                        <option value="カード支払い">カード支払い</option>
                     </select>
+                    @error('payment_method')
+                    <p class="error-message">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
-            {{-- 配送先 (ID12) --}}
+            {{-- 配送先 --}}
             <div class="purchase__group">
                 <div class="purchase__group-header">
                     <h3>配送先</h3>
                     <a href="{{ route('addresses.edit', ['item_id' => $item->id]) }}" class="purchase__edit-link">変更する</a>
                 </div>
                 <div class="purchase__address-info">
-                    <p>〒 {{ Auth::user()->profile->postal_code ?? '000-0000' }}</p>
-                    <p>{{ Auth::user()->profile->address ?? '住所が登録されていません' }}</p>
-                    <p>{{ Auth::user()->profile->building ?? '' }}</p>
+                    @error('address_check')
+                    <p class="error-message">{{ $message }}</p>
+                    @enderror
+
+                    @if($profile)
+                    <p>〒 {{ $profile->postal_code }}</p>
+                    <p>{{ $profile->address }}</p>
+                    <p>{{ $profile->building }}</p>
+                    @endif
                 </div>
             </div>
         </div>
 
-        {{-- 右側：確認エリア --}}
+        {{-- 確認エリア --}}
         <div class="purchase__side">
             <div class="purchase__summary">
                 <div class="purchase__summary-row">
@@ -74,12 +79,5 @@
     </div>
 </div>
 
-<script>
-    // 支払い方法の即時反映 (ID11)
-    const select = document.getElementById('payment_select');
-    const display = document.getElementById('display-payment');
-    select.addEventListener('change', () => {
-        display.textContent = select.options[select.selectedIndex].text;
-    });
-</script>
+<script src="{{ asset('js/purchase.js') }}"></script>
 @endsection
