@@ -6,23 +6,19 @@
 
 @section('content')
 <main class="item-detail">
-    {{-- 左側：画像固定エリア --}}
     <div class="item-detail__left">
         <div class="item-detail__image">
             <img src="{{ str_starts_with($item->image_url, 'http') ? $item->image_url : asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
         </div>
     </div>
 
-    {{-- 右側：スクロール情報エリア --}}
     <div class="item-detail__right">
-        {{-- 商品タイトル・金額 --}}
         <section class="item-header">
             <h1 class="item-name">{{ $item->name }}</h1>
             <p class="brand-name">{{ $item->brand }}</p>
             <p class="item-price">¥{{ number_format($item->price) }} <span class="tax">(税込)</span></p>
 
             <div class="stats-row">
-                {{-- いいねボタン --}}
                 <div class="stat-group">
                     <form action="{{ route('items.like', $item->id) }}" method="POST">
                         @csrf
@@ -32,7 +28,6 @@
                     </form>
                     <span class="count">{{ $item->likes->count() }}</span>
                 </div>
-                {{-- コメント数 --}}
                 <div class="stat-group">
                     <div class="icon-btn">
                         <img src="{{ asset('img/ふきだしロゴ.png') }}" alt="コメント">
@@ -41,16 +36,14 @@
                 </div>
             </div>
 
-            <a href="{{ route('item.purchase', $item->id) }}" class="btn-purchase">購入手続きへ</a>
+            <a href="{{ route('purchases.show', ['item_id' => $item->id]) }}" class="btn-purchase">購入手続きへ</a>
         </section>
 
-        {{-- 商品説明 --}}
         <section class="item-section">
             <h2 class="section-title">商品説明</h2>
             <p class="description-text">{{ $item->description }}</p>
         </section>
 
-        {{-- 商品の情報 --}}
         <section class="item-section">
             <h2 class="section-title">商品の情報</h2>
             <div class="info-table">
@@ -69,19 +62,15 @@
             </div>
         </section>
 
-        {{-- コメント --}}
         <section class="item-section">
             <h2 class="section-title color-gray">コメント ({{ $item->comments->count() }})</h2>
             <div class="comment-list">
                 @foreach($item->comments as $comment)
                 <div class="comment-item">
-                    {{-- ユーザーアイコン表示の分岐 --}}
                     <div class="comment-user-image">
                         @if($comment->user->image_url)
-                        {{-- プロフィール画像がある場合 --}}
                         <img src="{{ asset('storage/' . $comment->user->image_url) }}" alt="ユーザーアイコン" class="user-icon">
                         @else
-                        {{-- 画像がない場合は 👤 を表示 --}}
                         <div class="default-user-icon">👤</div>
                         @endif
                     </div>

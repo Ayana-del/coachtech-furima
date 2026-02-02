@@ -24,6 +24,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'showPurchasePage'])->name('purchases.show');
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'storePurchase'])->name('purchases.store');
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('addresses.edit');
+    Route::patch('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('addresses.update');
+    Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'successPurchase'])->name('purchases.success');
     //出品
     Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
     Route::post('/sell', [ItemController::class, 'store'])->name('item.store');
