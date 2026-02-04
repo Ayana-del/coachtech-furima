@@ -1,11 +1,9 @@
-/* 1. 全体のリセット */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 2. 商品一覧ページ全体 */
 .item-page {
     width: 100%;
     background-color: #ffffff;
@@ -15,7 +13,6 @@
     align-items: center;
 }
 
-/* 3. タブコンテナ */
 .tab-container {
     width: 100%;
     height: 40px;
@@ -25,7 +22,6 @@
 }
 
 .tab-inner {
-    /* 固定幅を解除し、最大幅に設定 */
     width: 100%;
     max-width: 1512px;
     height: 100%;
@@ -47,37 +43,24 @@
     cursor: pointer;
 }
 
-.tab-item:first-child {
-    left: 129px;
-}
-
-.tab-item:last-child {
-    left: 336px;
-}
-
 .tab-item.active {
     color: #FF4D4D;
 }
 
-/* 4. 商品グリッド */
 .item-grid {
-    /* 固定幅を解除し、最大幅に設定 */
     width: 95%;
     max-width: 1374.5px;
     margin: 76px auto 0 auto;
     display: grid;
-    /* デフォルト（PC）は4列。1frで幅を自動調整 */
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     row-gap: 76px;
 }
 
-/* 5. 商品アイテム */
 .item-item {
     text-decoration: none;
     color: inherit;
     width: 100%;
-    /* 親のグリッドセルに合わせる */
     max-width: 290px;
     margin: 0 auto;
     display: flex;
@@ -87,8 +70,8 @@
 .item-image {
     width: 100%;
     aspect-ratio: 1 / 1;
-    /* 正方形を維持 */
     background-color: #D9D9D9;
+    position: relative;
 }
 
 .item-image img {
@@ -97,7 +80,7 @@
     object-fit: cover;
 }
 
-.item-page .item-grid .item-item .item-name {
+.item-name {
     margin-top: 10px;
     font-size: 16px;
     color: #000000;
@@ -108,22 +91,76 @@
     text-overflow: ellipsis;
 }
 
-/* =============================================
-   タブレット対応 (768px - 1024px付近)
-   ============================================= */
-@media screen and (max-width: 1024px) {
+.sold-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 60px 60px 0 0;
+    border-color: #ff4d4d transparent transparent transparent;
+    z-index: 1;
+}
 
-    /* 商品を2列に変更して、はみ出しを防止 */
-    .item-grid {
-        grid-template-columns: repeat(2, 1fr);
+.sold-label::after {
+    content: 'SOLD';
+    position: absolute;
+    top: -55px;
+    left: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    transform: rotate(-45deg);
+    display: block;
+    width: 50px;
+}
+.alert-success {
+    /* 幅を入力欄やボタンと一致させる */
+    width: 680px;
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 1400px) {
+    .tab-item:first-child {
+        left: 129px;
     }
 
-    /* タブの左余白を画面幅に合わせて微調整 */
+    .tab-item:last-child {
+        left: 336px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     .tab-item:first-child {
         left: 5%;
     }
 
     .tab-item:last-child {
-        left: 200px;
+        left: calc(5% + 160px);
+    }
+
+    .item-grid {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 50px;
+    }
+}
+
+@media screen and (max-width: 1399px) and (min-width: 851px) {
+    .tab-item:first-child {
+        left: 50px;
+    }
+
+    .tab-item:last-child {
+        left: 230px;
     }
 }

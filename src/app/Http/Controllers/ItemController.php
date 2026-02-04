@@ -21,29 +21,23 @@ class ItemController extends Controller
 
         $query = Item::query();
 
-        // 自分の出品した商品は表示しない
         if (Auth::check()) {
             $query->where('user_id', '!=', Auth::id());
         }
 
-        // キーワード検索：タブの状態に関わらず適用
         if ($keyword) {
             $query->where('name', 'LIKE', "%{$keyword}%");
         }
 
-        // タブによる絞り込み
         if ($tab === 'mylist') {
             if (Auth::check()) {
-                // マイリスト（自分がいいねした商品）かつ検索ワードに一致するもの
                 $query->whereHas('likes', function ($q) {
                     $q->where('user_id', Auth::id());
                 });
             } else {
-                // 未ログイン時にマイリストタブを選択した場合は何も表示しない
                 $query->whereRaw('1 = 0');
             }
         }
-        // $tab が 'recommend' の場合は、追加の whereHas を行わず全件（+キーワード）を表示
 
         $items = $query->get();
 
@@ -51,7 +45,9 @@ class ItemController extends Controller
     }
     public function show($item_id)
     {
-        $item = Item::with(['categories', 'condition', 'comments.user', 'likes'])
+        $item = Item::with(['categories', 'condition', 'comments' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'comments.user', 'likes'])
             ->findOrFail($item_id);
 
         $isLiked = false;
@@ -63,38 +59,39 @@ class ItemController extends Controller
     }
     public function toggleLike($item_id)
     {
-        // 未ログインユーザーはログイン画面へリダイレクト
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
         $user_id = Auth::id();
 
-        // 1 & 3. すでにいいねしているか確認（トグルロジック）
         $like = Like::where('item_id', $item_id)->where('user_id', $user_id)->first();
 
         if ($like) {
-            // 3. すでに存在すれば削除（いいね解除）
             $like->delete();
-            // 3-a. これにより $item->likes->count() が減少します
         } else {
-            // 1. 存在しなければ作成（いいね登録）
             Like::create([
                 'item_id' => $item_id,
                 'user_id' => $user_id,
             ]);
-            // 1-a. これにより $item->likes->count() が増加します
         }
 
-        // 元の詳細画面に戻る（再描画されてアイコンの色とカウントが更新される）
         return back();
     }
     public function purchase($item_id)
     {
         $item = Item::findOrFail($item_id);
 
-        return view('items.purchase', compact('item'));
+        // ログインユーザーのプロフィールを取得（User.php のリレーションを利用）
+        $profile = null;
+        if (Auth::check()) {
+            $profile = Auth::user()->profile;
+        }
+
+        // ビューへ $item と $profile の両方を渡す
+        return view('items.purchase', compact('item', 'profile'));
     }
+
     public function storeComment(CommentRequest $request, $item_id)
     {
         Comment::create([
@@ -120,29 +117,25 @@ class ItemController extends Controller
      */
     public function store(ItemRequest $request)
     {
-        // 1. 画像の保存処理
         $image_path = null;
-        if ($request->hasFile('image_url')) {
-            $image_path = $request->file('image_url')->store('items', 'public');
+        if ($request->hasFile('img_url')) {
+            $image_path = $request->file('img_url')->store('items', 'public');
         }
 
-        // 2. itemsテーブルへの保存
         $item = Item::create([
-            'user_id'     => Auth::id(),
+            'user_id'      => Auth::id(),
             'condition_id' => $request->condition_id,
-            'name'        => $request->name,
-            'brand'       => $request->brand,
-            'price'       => $request->price,
-            'description' => $request->description,
-            'image_url'     => $image_path,
+            'name'         => $request->name,
+            'brand'   => $request->brand,
+            'price'        => $request->price,
+            'description'  => $request->description,
+            'image_url'    => $image_path,
         ]);
 
-        // 3. 中間テーブル（category_item）への紐付け
         if ($request->categories) {
             $item->categories()->attach($request->categories);
         }
 
-        // 出品完了後、トップページへ遷移（または詳細画面など）
         return redirect()->route('item.index');
     }
 }

@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+@if (session('message'))
+<div class="alert-success">
+    {{ session('message') }}
+</div>
+@endif
 <div class="item-page">
     <div class="tab-container">
         <a href="{{ route('item.index', ['keyword' => $keyword]) }}"
@@ -21,7 +26,7 @@
             <div class="item-image">
                 <img src="{{ str_starts_with($item->image_url, 'http') ? $item->image_url : asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}">
                 @if($item->is_sold)
-                <div class="sold-label">Sold</div>
+                <div class="sold-label"></div>
                 @endif
             </div>
             <div class="item-name">

@@ -19,7 +19,7 @@ class Item extends Model
         'condition_id',
         'name',
         'image_url',
-        'brand',
+        'brand_name',
         'price',
         'description',
     ];

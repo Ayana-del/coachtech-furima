@@ -1,11 +1,9 @@
-/* 全体のリセット */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 物理的な横スクロール禁止 */
 html,
 body {
     overflow-x: hidden;
@@ -14,21 +12,24 @@ body {
 
 body {
     font-family: 'Inter', sans-serif;
-    /* 修正ポイント：ヘッダーの黒が画面端まで届くように背景を設定 */
-    background: linear-gradient(to bottom, #000000 80px, #ffffff 80px);
+    background-color: #ffffff;
     min-width: 1512px;
 }
 
-/* ヘッダー本体 (Figma: 1512 × 80) */
+/* ヘッダー外枠：横幅一杯を黒にする */
 .header {
-    width: 1512px;
+    width: 100%;
     height: 80px;
     background-color: #000000;
+}
+
+/* ヘッダー内側：1512pxで中央寄せし、ロゴ位置を固定する */
+.header__inner {
+    width: 1512px;
+    height: 100%;
     margin: 0 auto;
     position: relative;
 }
-
-/* --- ここから下の数値は一切崩さず完全維持 --- */
 
 .header__logo {
     position: absolute;
@@ -111,9 +112,6 @@ body {
     border-radius: 4px;
 }
 
-/* --- レスポンシブ対応 (デザインを縮小して画面に収める) --- */
-
-/* タブレット (768px - 850px) */
 @media screen and (min-width: 768px) and (max-width: 850px) {
     body {
         zoom: 0.5;
@@ -121,7 +119,6 @@ body {
     }
 }
 
-/* パソコン (1400px - 1540px) */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     body {
         zoom: 0.93;

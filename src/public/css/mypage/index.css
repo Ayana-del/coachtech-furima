@@ -1,17 +1,7 @@
-/* --- 1. リセットと基本構造 --- */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html,
-body {
+* {
     margin: 0;
     padding: 0;
-    width: 100%;
-    background-color: #ffffff;
-    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 .item-page {
@@ -21,7 +11,6 @@ body {
     align-items: center;
 }
 
-/* --- 2. ユーザーセクション (1017px幅を維持) --- */
 .mypage-user-section {
     width: 100%;
     max-width: 1017px;
@@ -43,12 +32,23 @@ body {
     overflow: hidden;
     background-color: #ddd;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
 }
 
 .user-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.default-user-icon {
+    font-size: 80px;
+    line-height: 1;
+    user-select: none;
+    display: block;
 }
 
 .user-name {
@@ -76,10 +76,8 @@ body {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    background: transparent;
 }
 
-/* --- 3. タブメニュー (下線を画面端まで通す修正) --- */
 .tab-container {
     width: 100%;
     height: 45px;
@@ -89,7 +87,8 @@ body {
 }
 
 .tab-inner {
-    width: 1017px;
+    width: 100%;
+    max-width: 1017px;
     margin: 0 auto;
     position: relative;
     height: 100%;
@@ -120,10 +119,8 @@ body {
 
 .tab-item.active {
     color: #FF0000;
-    border-bottom: none;
 }
 
-/* --- 4. 商品一覧 (1374px幅を維持) --- */
 .item-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -146,6 +143,8 @@ body {
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 12px;
+    position: relative;
+    background-color: #D9D9D9;
 }
 
 .item-image img {
@@ -155,79 +154,53 @@ body {
 }
 
 .item-name {
-    font-size: 16px;
+    font-size: 18px;
     color: #000;
     text-align: left;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.no-items {
-    width: 100%;
-    max-width: 1374px;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-size: 18px;
-    font-weight: 500;
-    color: #000;
-    text-align: left;
-}
-.user-image-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ddd;
-    /* 背景色をつけて円形を際立たせる */
-    color: #ffffff;
-    /* アイコンの色 */
-}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
 
-.default-user-icon {
-    font-size: 80px;
-    /* 150pxの枠に対して適切なサイズに調整 */
-    line-height: 1;
-    user-select: none;
-    /* 選択不可にする */
-    display: block;
-}
-
-/* =============================================
-   追記：タブレット対応 (1024px以下)
-   PCのデザインを崩さず、はみ出しのみを上書き解決
-   ============================================= */
-@media screen and (max-width: 1024px) {
-
-    /* 固定幅(1017px)を解除して画面内に収める */
     .mypage-user-section,
     .tab-inner {
-        width: 100%;
-        max-width: 100%;
+        max-width: 800px;
+        padding: 0;
     }
 
-    /* プロフィールボタン：絶対配置だと名前に被るので、中央下部に逃がす */
-    .mypage-user-section {
-        padding-bottom: 80px;
+    .user-image-wrapper {
+        width: 130px;
+        height: 130px;
+    }
+
+    .default-user-icon {
+        font-size: 70px;
+    }
+
+    .user-name {
+        font-size: 28px;
     }
 
     .profile-edit-btn {
-        top: auto;
-        bottom: 0;
-        right: 50%;
-        transform: translateX(50%);
-        width: 90%;
-        max-width: 310px;
+        width: 240px;
+        font-size: 20px;
+        right: 0;
     }
 
-    /* タブの配置：固定値(129px等)を%に変えて、狭い画面でも左右に散らす */
     #tab-sell {
-        left: 10%;
+        left: 40px;
     }
 
     #tab-buy {
-        left: 50%;
+        left: 247px;
     }
 
-    /* 商品グリッドを2列に（商品一覧画面と同じ挙動） */
     .item-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+        padding: 0 40px;
     }
 }

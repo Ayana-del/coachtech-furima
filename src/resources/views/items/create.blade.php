@@ -27,19 +27,18 @@
                     </div>
                     <label class="item-create__image-label">
                         画像を選択する
-                        <input type="file" name="image_url" id="img_url" accept="image/*" onchange="previewImage(this)">
+                        <input type="file" name="img_url" id="img_url" accept="image/*" onchange="previewImage(this)">
                     </label>
                 </div>
                 <div class="item-create__error">
-                    @error('image_url') <p>{{ $message }}</p> @enderror
+                    @error('img_url') <p>{{ $message }}</p> @enderror
                 </div>
             </div>
 
-            {{-- 商品の詳細セクション --}}
             <div class="item-create__section">
                 <h3 class="item-create__section-title">商品の詳細</h3>
 
-                {{-- カテゴリー --}}
+                {{-- カテゴリー：元の横並びボタン形式 --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>カテゴリー</p>
@@ -57,7 +56,6 @@
                     </div>
                 </div>
 
-                {{-- 商品の状態 --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>商品の状態</p>
@@ -78,11 +76,9 @@
                 </div>
             </div>
 
-            {{-- 商品名と説明セクション（ブランド名・価格も統合） --}}
             <div class="item-create__section">
                 <h3 class="item-create__section-title">商品名と説明</h3>
 
-                {{-- 商品名 --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>商品名</p>
@@ -95,7 +91,6 @@
                     </div>
                 </div>
 
-                {{-- ブランド名（追加修正箇所） --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>ブランド名</p>
@@ -108,7 +103,6 @@
                     </div>
                 </div>
 
-                {{-- 商品の説明 --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>商品の説明</p>
@@ -121,20 +115,21 @@
                     </div>
                 </div>
 
-                {{-- 販売価格 --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>販売価格</p>
                     </div>
                     <div class="item-create__input-price">
                         <span class="price-unit">¥</span>
-                        <input type="number" name="price" value="{{ old('price') }}">
+                        {{-- type="text" にして矢印と数字キーボードを回避 --}}
+                        <input type="text" name="price" value="{{ old('price') }}">
                     </div>
                     <div class="item-create__error">
                         @error('price') <p>{{ $message }}</p> @enderror
                     </div>
                 </div>
             </div>
+
             <div class="item-create__button">
                 <button class="item-create__button-submit" type="submit">出品する</button>
             </div>

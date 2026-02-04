@@ -1,0 +1,140 @@
+.address-edit-container {
+    position: relative;
+    width: 1512px;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+}
+
+.address-edit-title {
+    position: absolute;
+    width: 180px;
+    height: 44px;
+    top: 128px;
+    left: 659px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 100%;
+    color: #000000;
+    margin: 0;
+}
+
+.address-edit-form {
+    position: relative;
+    width: 100%;
+}
+
+.form-group {
+    position: absolute;
+    left: 416px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    width: 205px;
+    height: 36px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    color: #000000;
+    margin-bottom: 0;
+}
+
+.form-group input {
+    width: 680px;
+    height: 45px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.form-group:nth-of-type(1) {
+    top: 275px;
+}
+
+.form-group:nth-of-type(2) {
+    top: 406px;
+}
+
+.form-group:nth-of-type(3) {
+    top: 537px;
+}
+
+/* 修正：右に寄るのを防ぐため、text-alignとmarginを厳格に指定 */
+.address-checkbox-group {
+    position: absolute;
+    top: 670px;
+    left: 416px;
+    /* 入力欄の開始位置 */
+    width: 680px;
+    /* 入力欄の幅 */
+    display: flex;
+    justify-content: center;
+    /* 680pxの中で中央寄せ */
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: auto;
+    margin: 0 auto;
+    /* 親要素内での中央寄せを補強 */
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+    margin: 0 12px 0 0;
+    /* 右側の文字との間隔のみ指定 */
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #000000;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.submit-button {
+    position: absolute;
+    width: 680px;
+    height: 60px;
+    top: 787px;
+    left: 416px;
+    background: #FF5555;
+    border: none;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.error-message {
+    color: #FF5555;
+    font-size: 14px;
+    margin: 5px 0 0 0;
+}

@@ -15,7 +15,8 @@
     <div class="item-detail__right">
         <section class="item-header">
             <h1 class="item-name">{{ $item->name }}</h1>
-            <p class="brand-name">{{ $item->brand }}</p>
+            {{-- DBカラム名 brand_name に修正 --}}
+            <p class="brand-name">{{ $item->brand_name }}</p>
             <p class="item-price">¥{{ number_format($item->price) }} <span class="tax">(税込)</span></p>
 
             <div class="stats-row">
@@ -47,16 +48,17 @@
         <section class="item-section">
             <h2 class="section-title">商品の情報</h2>
             <div class="info-table">
-                <div class="info-row" style="margin-bottom: 20px;">
-                    <span class="info-label" style="font-weight: bold; margin-right: 20px;">カテゴリー</span>
-                    <div class="tags" style="display: inline-block;">
+                <div class="info-row" style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <span class="info-label" style="font-weight: bold; width: 120px;">カテゴリー</span>
+                    <div class="tags" style="display: flex; flex-wrap: wrap; gap: 8px;">
                         @foreach($item->categories as $category)
-                        <span class="category-tag">{{ $category->name }}</span>
+                        {{-- カラム名を content に修正 --}}
+                        <span class="category-tag" style="border: 1px solid #FF5555; border-radius: 20px; padding: 2px 12px; color: #FF5555; font-size: 14px;">{{ $category->content }}</span>
                         @endforeach
                     </div>
                 </div>
-                <div class="info-row">
-                    <span class="info-label" style="font-weight: bold; margin-right: 20px;">商品の状態</span>
+                <div class="info-row" style="display: flex; align-items: center;">
+                    <span class="info-label" style="font-weight: bold; width: 120px;">商品の状態</span>
                     <span class="info-value">{{ $item->condition->name }}</span>
                 </div>
             </div>

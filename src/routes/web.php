@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\AddressController;
 
 // --- 1. 誰でも見れるルート ---
 //商品一覧画面
@@ -20,11 +21,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/item/{item_id}/like', [ItemController::class, 'toggleLike'])->name('items.like');
     // マイページ
     Route::get('/mypage', [MypageController::class, 'index'])->name('mypage.index');
-    // 商品購入画面（GET)
+    // 商品購入画面
     Route::get('/purchase/{item_id}', [PurchaseController::class, 'showPurchasePage'])->name('purchases.show');
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'storePurchase'])->name('purchases.store');
-    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'editAddress'])->name('addresses.edit');
-    Route::patch('/purchase/address/{item_id}', [PurchaseController::class, 'updateAddress'])->name('addresses.update');
+    // 住所（配送先）変更フロー
+    Route::get('/purchase/address/{item_id}', [AddressController::class, 'editAddress'])->name('addresses.edit');
+    Route::patch('/purchase/address/{item_id}', [AddressController::class, 'updateAddress'])->name('addresses.update');
     Route::get('/purchase/success/{item_id}', [PurchaseController::class, 'successPurchase'])->name('purchases.success');
     //出品
     Route::get('/sell', [ItemController::class, 'create'])->name('item.create');
