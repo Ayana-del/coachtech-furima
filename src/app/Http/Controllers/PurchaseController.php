@@ -32,9 +32,6 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        // 【テスト用】ここをコメントアウト解除するとStripeをスキップ
-        // return $this->successPurchase($request, $item_id);
-
         Stripe::setApiKey(config('services.stripe.secret'));
 
         $session = Session::create([

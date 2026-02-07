@@ -14,6 +14,7 @@ use App\Models\Condition;
 
 class ItemController extends Controller
 {
+
     public function index(Request $request)
     {
         $tab = $request->query('tab', 'recommend');
@@ -22,21 +23,24 @@ class ItemController extends Controller
         $query = Item::query();
 
         if (Auth::check()) {
-            $query->where('user_id', '!=', Auth::id());
+            $query->where('items.user_id', '!=', Auth::id());
         }
 
         if ($keyword) {
-            $query->where('name', 'LIKE', "%{$keyword}%");
+            $query->where('items.name', 'LIKE', "%{$keyword}%");
         }
 
         if ($tab === 'mylist') {
             if (Auth::check()) {
-                $query->whereHas('likes', function ($q) {
-                    $q->where('user_id', Auth::id());
-                });
+                $query->join('likes', 'items.id', '=', 'likes.item_id')
+                    ->where('likes.user_id', Auth::id())
+                    ->orderBy('likes.created_at', 'desc')
+                    ->select('items.*');
             } else {
                 $query->whereRaw('1 = 0');
             }
+        } else {
+            $query->latest('items.created_at');
         }
 
         $items = $query->get();
@@ -82,13 +86,11 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        // ログインユーザーのプロフィールを取得（User.php のリレーションを利用）
         $profile = null;
         if (Auth::check()) {
             $profile = Auth::user()->profile;
         }
 
-        // ビューへ $item と $profile の両方を渡す
         return view('items.purchase', compact('item', 'profile'));
     }
 
@@ -136,6 +138,6 @@ class ItemController extends Controller
             $item->categories()->attach($request->categories);
         }
 
-        return redirect()->route('item.index');
+        return redirect()->route('mypage.index', ['tab' => 'sell']);
     }
 }

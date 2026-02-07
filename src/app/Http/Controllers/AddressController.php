@@ -12,9 +12,7 @@ class AddressController extends Controller
     {
         $item = Item::findOrFail($item_id);
 
-        $profile = Auth::user()->profile;
-
-        return view('addresses.edit', compact('item', 'profile'));
+        return view('addresses.edit', compact('item'));
     }
 
     public function updateAddress(AddressRequest $request, $item_id)

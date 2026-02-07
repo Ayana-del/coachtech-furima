@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <label for="postcode">郵便番号</label>
-            <input type="text" name="postcode" id="postcode" value="{{ old('postcode', $profile->postcode ?? '') }}">
+            <input type="text" name="postcode" value=" {{ old('postcode') }}">
             @error('postcode')
             <p class="error-message">{{ $message }}</p>
             @enderror
@@ -22,24 +22,24 @@
 
         <div class="form-group">
             <label for="address">住所</label>
-            <input type="text" name="address" id="address" value="{{ old('address', $profile->address ?? '') }}">
+            <input type="text" name="address" value="{{ old('address') }}">
             @error('address')
-            <p class="error-message">{{ $message }}</p>
+            <p class=" error-message">{{ $message }}</p>
             @enderror
         </div>
 
         <div class="form-group">
             <label for="building">建物名</label>
-            <input type="text" name="building" id="building" value="{{ old('building', $profile->building ?? '') }}">
+            <input type="text" name="building" value="{{ old('building') }}">
             @error('building')
-            <p class="error-message">{{ $message }}</p>
+            <p class=" error-message">{{ $message }}</p>
             @enderror
         </div>
 
         <div class="address-checkbox-group">
             <label class="checkbox-label">
                 <input type="hidden" name="update_profile" value="0">
-                <input type="checkbox" name="update_profile" id="update_profile" value="1" {{ old('update_profile', '1') == '1' ? 'checked' : '' }}>
+                <input type="checkbox" name="update_profile" id="update_profile" value="1" {{ old('update_profile') == '1' ? 'checked' : '' }}>
                 <span class="checkbox-text">この住所をプロフィールに登録する</span>
             </label>
         </div>

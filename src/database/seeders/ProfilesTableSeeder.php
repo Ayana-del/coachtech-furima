@@ -18,7 +18,7 @@ class ProfilesTableSeeder extends Seeder
             'user_id' => 1, // 最初に作成されるユーザーID
             'name' => 'テスト太郎',
             'postcode' => '123-4567',
-            'address' => '東京都渋谷区道玄坂...',
+            'address' => '東京都渋谷区道玄坂2-11',
             'building' => 'テックビル 101',
             'image_url' => null,
         ]);

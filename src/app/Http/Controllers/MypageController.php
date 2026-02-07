@@ -18,27 +18,24 @@ class MypageController extends Controller
         $tab = $request->query('tab', 'sell');
         $keyword = $request->query('keyword');
 
-        // 1. 出品した商品の取得ロジック
         $sellQuery = Item::where('user_id', $user->id);
 
-        // 修正点：検索キーワードがある場合、タブが 'sell' の時だけ絞り込む
         if ($keyword && $tab === 'sell') {
             $sellQuery->where('name', 'LIKE', "%{$keyword}%");
         }
-        $sellItems = $sellQuery->get();
 
-        // 2. 購入した商品の取得ロジック
-        $buyQuery = Item::whereHas('orders', function ($query) use ($user) {
-            $query->where('user_id', $user->id);
-        });
+        $sellItems = $sellQuery->latest()->get();
 
-        // 修正点：検索キーワードがある場合、タブが 'buy' の時だけ絞り込む
+        $buyQuery = Item::join('orders', 'items.id', '=', 'orders.item_id')
+            ->where('orders.user_id', $user->id)
+            ->select('items.*');
+
         if ($keyword && $tab === 'buy') {
-            $buyQuery->where('name', 'LIKE', "%{$keyword}%");
+            $buyQuery->where('items.name', 'LIKE', "%{$keyword}%");
         }
-        $buyItems = $buyQuery->get();
 
-        // ビューに tab と keyword を渡すことで、Blade側の hidden フィールド等で再利用可能にする
+        $buyItems = $buyQuery->orderBy('orders.created_at', 'desc')->get();
+
         return view('mypage.index', compact('user', 'sellItems', 'buyItems', 'tab', 'keyword'));
     }
 }
