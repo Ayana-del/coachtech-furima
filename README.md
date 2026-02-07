@@ -257,9 +257,10 @@ Eloquent モデルにおけるリレーションシップの定義一覧です�
   
 1. ItemController(商品管理・表示)  
 商品の閲覧、出品、いいね、コメント投稿といったメイン機能を担当します。  
+  
 | メソッド名 | 役割 | 処理内容 |  
 | ---- | ---- | ---- |  
-| index | 商品一覧表示 | 「おすすめ」「マイリスト」の切り替え、キーワード兼s買う、自分以外の出品商品の抽出。 |  
+| index | 商品一覧表示 | 「おすすめ」「マイリスト」の切り替え、キーワード切り替え、自分以外の出品商品の抽出。 |  
 | show | 商品詳細表示 | 商品の詳細、コメント一覧の取得、いいね状態の判定。 |  
 | toggleLike | いいねの切り替え | ログイン状態を確認し、いいねの登録と解除を交互に実行。 |  
 | create | 出品画面表示 | カテゴリーマスター、商品状態を取得して出品フォームを表示。 |  
@@ -268,6 +269,7 @@ Eloquent モデルにおけるリレーションシップの定義一覧です�
   
 2. PurchaseController(決済・購入)  
 Stripeを利用した決済フロート、購入完了後の注文データ作成を担当します。  
+  
 | メソッド名 | 役割 | 処理内容 |  
 | ---- | ---- | ---- |  
 | showPurchasePage | 購入確認画面 | 商品情報の表示と、配送先（DBまたはセッション）の確定。 |  
@@ -275,6 +277,7 @@ Stripeを利用した決済フロート、購入完了後の注文データ作�
 | successPurchase | 購入完了処理 | 決済成功後、確定した配送先情報を含めてordersテーブルに記録。 |  
   
 3. ProfileController(プロフィール管理)  
+  
 ユーザー情報の変更と、初期設定時のユーザー体験（UX）制御を担当します。  
 | メソッド名 | 役割 | 処理内容 |  
 | ---- | ---- | ---- |  
@@ -282,6 +285,7 @@ Stripeを利用した決済フロート、購入完了後の注文データ作�
 | update | プロフィール更新 | 氏名、住所、画像の更新。初回登録時はトップ、２回目以降は編集画面へ遷移。 |  
   
 4. AddressController(配送先変更)  
+  
 購入フロー中における、配送先住所の一時的または永続的な変更を担当します。  
 | メソッド名 | 役割 | 処理内容 |  
 | ---- | ---- | ---- |  
@@ -289,6 +293,7 @@ Stripeを利用した決済フロート、購入完了後の注文データ作�
 | updateAddress |住所変更処理 | 選択により「プロフィールDBを更新」または「セッションに一時保存」を切り替え。 |  
   
 5. MypageController(マイページ表示)  
+  
 ユーザー自身の活動履歴（出品・購入）の表示を担当します。  
 | メソッド名 | 役割 | 処理内容 |  
 | ---- | ---- | ---- |  
@@ -303,43 +308,45 @@ Stripeを利用した決済フロート、購入完了後の注文データ作�
 | / | GET | item.index | ItemController@index | 商品一覧画面の表示 |  
 | /item/{item_id} | GET | item.show | ItemController@show | 商品詳細画面の表示 |  
   
-2. 要認証ルート（メールb認証済みユーザーのみ）  
-ログインしており、かつメール認証（verified）が完了しているユーザーのみがアクセス可能なメイン機能です。  
+2. 要認証ルート（メール認証済みユーザーのみ）  
+ログインしており、かつメール認証（verified）が完了しているユーザーのみがアクセス可能なメイン機能です。
+
 | カテゴリ | URL | メソッド | ルート名 | 担当コントローラー | 処理内容 |  
 | ---- | ---- | ---- | ---- | ---- | ---- |  
 | ユーザー | /mypage | GET | mypage.index | MypageController@index | マイページの表示 |  
-|         | /mypage/profile | GET | profile.edit | ProfileController@edit | プロフィール編集画面の表示 |  
-|         | /mypage/profile | PATCH | profile.update | ProfileController@update | プロフィール情報の更新 |  
+| | /mypage/profile | GET | profile.edit | ProfileController@edit | プロフィール編集画面の表示 |  
+| | /mypage/profile | PATCH | profile.update | ProfileController@update | プロフィール情報の更新 |  
 | 商品操作 | /sell | GET | item.create | ItemController@create | 商品出品画面の表示 |  
-|         | /sell | POST | item.store | ItemController@store | 商品の出品登録処理 |  
-|         | /item/{item_id}/like | POST | ItemController@toggleLike | いいねの登録・解除 |  
-|.        | /item/{item_id}/comment | POST | comment.store | ItemController@storeComment | コメントの投稿 |  
+| | /sell | POST | item.store | ItemController@store | 商品の出品登録処理 |  
+| | /item/{item_id}/like | POST | - | ItemController@toggleLike | いいねの登録・解除 |  
+| | /item/{item_id}/comment | POST | comment.store | ItemController@storeComment | コメントの投稿 |  
 | 購入・配送 | /purchase/{item_id} | GET | purchases.show | PurchaseController@showPurchasePage | 購入確認画面の表示 |  
-|           | /purchase/{item_id} | POST | purchases.store | PurchaseController@storePurchase | Stripe決済実行 |  
-|           | /purchase/success/{item_id} | GET | purchase.success | PurchaseController @successPurchase | 購入完了後のDB登録処理 |  
-|           | /purchase/address/{item_id} | GET | addresses.edit | AddressController@editAddress | 配送先変更画面の表示 |  
-|           | purchase/address/{item_id} | PATCH | addresses.update | AddressController@updateAddress | 配送先の更新（セッション・DB） |  
+| | /purchase/{item_id} | POST | purchases.store | PurchaseController@storePurchase | Stripe決済実行 |  
+| | /purchase/success/{item_id} | GET | purchase.success | PurchaseController@successPurchase | 購入完了後のDB登録処理 |  
+| | /purchase/address/{item_id} | GET | addresses.edit | AddressController@editAddress | 配送先変更画面の表示 |  
+| | /purchase/address/{item_id} | PATCH | addresses.update | AddressController@updateAddress | 配送先の更新（セッション・DB） |  
   
 3. メール認証関連（認証プロセス）  
 メール認証を完了させるためのフローおよび、認証リンククリック時の遷移を制御するルートです。  
+  
 | URL | メソッド | ルート名 | 処理内容 |  
 | ---- | ---- | ---- | ---- |  
 | /email/verify | GET | verification.notice | メール認証誘導画面（auth.verify-email）の表示 |  
 | /email/verification-notification | POST | verification.send | 認証メールの再送信 |  
 | /email/verify/{id}/{hash} | GET | verification.verify | 認証完了処理。完了後、「プロフィール編集画面」へ遷移。 |  
-
-
+  
 ## ヘッダー機能  
 共通レイアウトとして、全ページ（認証画面を除く）で利用可能なナビゲーションと検索機能を提供しています。  
   
 1. 動的な検索機能  
 表示されているページや選択中のタブに応じて、検索対象を自動的に切り替えます。  
+  
 | 現在のページ | 選択中のタブ | 検索対象 |  
-| ---- | ---- | ---- |
+| ---- | ---- | ---- |  
 | 商品一覧 | おすすめ | 自分以外の全商品から検索 |  
-|         | マイリスト | 自分が「いいね」した商品の中から検索 |  
+| | マイリスト | 自分が「いいね」した商品の中から検索 |  
 | マイページ | 出品した商品 | 自分が過去に出品した商品から検索 |  
-|           | 購入した商品 | 自分が過去に購入した商品から検索 |  
+| | 購入した商品 | 自分が過去に購入した商品から検索 |  
   
 検索の技術的仕様  
 ・状態の継承：GETパラメータとしてtab情報を隠しフィールド（hidden）で送信することで、検索後もタブの切り替え状態を維持します。  
