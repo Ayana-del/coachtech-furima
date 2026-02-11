@@ -72,6 +72,7 @@
     aspect-ratio: 1 / 1;
     background-color: #D9D9D9;
     position: relative;
+    overflow: hidden;
 }
 
 .item-image img {
@@ -91,6 +92,7 @@
     text-overflow: ellipsis;
 }
 
+/* 修正点：赤い三角ラベル本体 */
 .sold-label {
     position: absolute;
     top: 0;
@@ -98,24 +100,31 @@
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 60px 60px 0 0;
+    border-width: 80px 80px 0 0;
     border-color: #ff4d4d transparent transparent transparent;
-    z-index: 1;
+    z-index: 2;
+    /* HTML内の文字を透明にして見えなくする */
+    color: transparent;
+    font-size: 0;
 }
 
+/* 修正点：三角の中の白文字（こちらが本物の見た目） */
 .sold-label::after {
+    content: "Sold";
     position: absolute;
-    top: -55px;
-    left: 5px;
-    color: #fff;
-    font-size: 14px;
+    top: -70px;
+    left: 2px;
+    color: #ffffff;
+    /* ここで白文字を指定 */
+    font-size: 16px;
     font-weight: bold;
     transform: rotate(-45deg);
     display: block;
-    width: 50px;
+    width: 60px;
+    text-align: center;
 }
+
 .alert-success {
-    /* 幅を入力欄やボタンと一致させる */
     width: 680px;
     padding: 15px;
     background-color: #d4edda;
