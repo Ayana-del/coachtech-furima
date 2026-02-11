@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-// 【重要】FormRequestではなく、FortifyのLoginRequestをインポートして別名を付ける
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 
-// 継承先を FortifyLoginRequest に変更する
 class LoginRequest extends FortifyLoginRequest
 {
     /**
@@ -15,7 +13,6 @@ class LoginRequest extends FortifyLoginRequest
      */
     public function authorize()
     {
-        // ログイン試行は全員に許可するため true
         return true;
     }
 

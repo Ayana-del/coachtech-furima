@@ -104,7 +104,6 @@
 }
 
 .sold-label::after {
-    content: 'SOLD';
     position: absolute;
     top: -55px;
     left: 5px;

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    // どのユーザーが どの商品に いいねしたかを保存
     protected $fillable = ['user_id', 'item_id'];
 
     public function user()

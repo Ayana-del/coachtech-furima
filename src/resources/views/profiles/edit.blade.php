@@ -112,7 +112,6 @@
         const previewImg = document.getElementById('preview-img');
         const previewDefault = document.getElementById('preview-default');
 
-        // input.files[0] を直接書かず、一度変数に受けることで解析エラーを回避しやすくします
         const files = input.files;
         if (files && files.length > 0) {
             const file = files[0];

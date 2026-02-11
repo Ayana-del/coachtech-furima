@@ -38,7 +38,6 @@
             <div class="item-create__section">
                 <h3 class="item-create__section-title">商品の詳細</h3>
 
-                {{-- カテゴリー：元の横並びボタン形式 --}}
                 <div class="item-create__group">
                     <div class="item-create__group-title">
                         <p>カテゴリー</p>
@@ -121,7 +120,6 @@
                     </div>
                     <div class="item-create__input-price">
                         <span class="price-unit">¥</span>
-                        {{-- type="text" にして矢印と数字キーボードを回避 --}}
                         <input type="text" name="price" value="{{ old('price') }}">
                     </div>
                     <div class="item-create__error">

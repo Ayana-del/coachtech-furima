@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail; // メール認証に必須
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -41,19 +41,23 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    // プロフィール (1対1)
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
     }
-    // 出品した商品 (1対多)
+
     public function items()
     {
         return $this->hasMany(Item::class);
     }
     public function orders()
     {
-    // 自分が購入した履歴
         return $this->hasMany(Order::class);
+    }
+
+    public function likedItems()
+    {
+        return $this->belongsToMany(Item::class, 'likes');
     }
 }

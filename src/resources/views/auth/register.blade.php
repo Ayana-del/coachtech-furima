@@ -81,7 +81,7 @@
         </div>
     </form>
     <div class="auth__link">
-        <a href="{{ route('login') }}" class="auth-link-item">ログインはこちら</a>
+        <a href="{{ route('login') }}" class="auth__link-item">ログインはこちら</a>
     </div>
 </div>
 @endsection

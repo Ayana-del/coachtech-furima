@@ -44,7 +44,6 @@
                         <a href="{{ route('addresses.edit', ['item_id' => $item->id]) }}" class="purchase__edit-link">変更する</a>
                     </div>
                     <div class="purchase__address-info">
-                        {{-- $profile ではなく $address を参照するように修正 --}}
                         @if($address)
                         <p>〒 {{ $address->postcode }}</p>
                         <p>{{ $address->address }} {{ $address->building }}</p>

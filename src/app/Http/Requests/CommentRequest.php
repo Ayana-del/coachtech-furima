@@ -8,18 +8,17 @@ use Illuminate\Support\Facades\Auth;
 class CommentRequest extends FormRequest
 {
     /**
-     * 1. ログインユーザーのみがコメントを送信することができる
+     *
      *
      * @return bool
      */
     public function authorize()
     {
-        // ログインしていれば true, していなければ false
         return Auth::check();
     }
 
     /**
-     * 2. 商品コメント：入力必須、最大文字数255
+     *
      *
      * @return array
      */
@@ -31,7 +30,7 @@ class CommentRequest extends FormRequest
     }
 
     /**
-     * エラーメッセージの定義（必要に応じて）
+     *
      *
      * @return array
      */

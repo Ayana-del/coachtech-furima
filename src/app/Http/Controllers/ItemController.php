@@ -128,7 +128,7 @@ class ItemController extends Controller
             'user_id'      => Auth::id(),
             'condition_id' => $request->condition_id,
             'name'         => $request->name,
-            'brand'   => $request->brand,
+            'brand'        => $request->brand,
             'price'        => $request->price,
             'description'  => $request->description,
             'image_url'    => $image_path,

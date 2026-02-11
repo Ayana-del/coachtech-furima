@@ -15,7 +15,7 @@
     <div class="item-detail__right">
         <section class="item-header">
             <h1 class="item-name">{{ $item->name }}</h1>
-            <p class="brand-name">{{ $item->brand_name }}</p>
+            <p class="brand-name">{{ $item->brand }}</p>
             <p class="item-price">¥{{ number_format($item->price) }} <span class="tax">(税込)</span></p>
 
             <div class="stats-row">
