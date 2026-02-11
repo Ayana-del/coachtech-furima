@@ -166,6 +166,46 @@ php artisan db:seedによって生成されるサンプル商品データには�
 ・内容の生合成について:ランダム抽選による紐付けのため、「商品名とカテゴリーの内容が一致しない（例：食品に家電カテゴリーがつく等）」場合があります。これは、あくまでシステム上のバリデーションおよび表示確認を目的としたデータ生成仕様であり、不具合ではありません。  
   
 
+## テスト実行環境の構築  
+本プロジェクトでは、開発用データベースのデータを保護するため、テスト実行時に専用のデータベース（demo_test）を使用します。  
+  
+### 1.テスト用データベースの作成  
+MySQLコンテナ内で、テスト用のデータベース（箱）を作成します。  
+  
+```bash  
+docker-compose exec mysql mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS demo_test;"  
+```  
+  
+### 2.テスト用環境変数の準備  
+.env.testing は機密情報保護のため Git 管理から除外されています。以下の手順で作成してください。  
+  
+```bash  
+cp .env .env.testing  
+```  
+  
+```bash  
+php artisan key:generate --env=testing  
+```  
+  
+作成した .env.testing を開き、データベース接続先をテスト専用のものに書き換えます。  
+# .env.testing の修正箇所  
+APP_ENV=testing  
+
+DB_CONNECTION=mysql_test  
+DB_DATABASE=demo_test  
+  
+### 3.テスト用マイグレーションの実行  
+テスト用データベースにテーブル構造を作成します。  
+```bash  
+php artisan migrate --env=testing  
+```  
+  
+## テストの実行方法  
+以下のコマンドでテストを実行できます。  
+```bash  
+php artisan test  
+```  
+  
 ## 開発・管理ツール  
 環境構築完了後、以下の URL から各機能にアクセスできます。  
   
