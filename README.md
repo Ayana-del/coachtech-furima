@@ -189,10 +189,16 @@ php artisan key:generate --env=testing
   
 作成した .env.testing を開き、データベース接続先をテスト専用のものに書き換えます。  
 # .env.testing の修正箇所  
+```bash  
 APP_ENV=testing  
-
+```  
+```bash  
 DB_CONNECTION=mysql_test  
+```  
+  
+```bash  
 DB_DATABASE=demo_test  
+```
   
 ### 3.テスト用マイグレーションの実行  
 テスト用データベースにテーブル構造を作成します。  
