@@ -25,13 +25,9 @@ class ItemFactory extends Factory
         ];
     }
 
-    /**
-     * 作成直後にカテゴリをランダムに紐づける
-     */
     public function configure()
     {
         return $this->afterCreating(function (Item $item) {
-            // 既存のカテゴリからランダムに1〜3個取得
             $categories = Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
             $item->categories()->attach($categories);
         });

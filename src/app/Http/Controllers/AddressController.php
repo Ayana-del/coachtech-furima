@@ -19,13 +19,9 @@ class AddressController extends Controller
     {
         $user = Auth::user();
 
-        $addressData = [
-            'postcode' => $request->postcode,
-            'address'  => $request->address,
-            'building' => $request->building,
-        ];
+        $addressData = $request->only(['postcode', 'address', 'building']);
 
-        if ($request->update_profile == '1') {
+        if ($request->boolean('update_profile')) {
             $user->profile()->updateOrCreate(
                 ['user_id' => $user->id],
                 $addressData
@@ -35,7 +31,7 @@ class AddressController extends Controller
             session(['shipping_address' => $addressData]);
         }
 
-        return redirect()->route('purchases.show', ['item_id' => $item_id])
+        return redirect()->route('purchases.show', compact('item_id'))
             ->with('message', '住所を更新しました');
     }
 }

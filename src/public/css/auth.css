@@ -1,8 +1,3 @@
-/* =============================================
-認証系（ログイン・登録・メール認証）統合CSS
-   ============================================= */
-
-/* 1. 基本設定：フォントと背景の統一 */
 html,
 body {
     margin: 0;
@@ -12,7 +7,6 @@ body {
     overflow-x: hidden;
 }
 
-/* 全ての入力要素にInterフォントを強制適用 */
 body,
 input,
 button,
@@ -25,7 +19,6 @@ select {
     box-sizing: border-box;
 }
 
-/* 2. 認証フォーム共通 (ログイン・会員登録) */
 .auth {
     width: 100%;
     background-color: #ffffff;
@@ -33,7 +26,6 @@ select {
 
 .auth__content {
     width: 680px;
-    /* PCデザイン固定幅 */
     margin: 80px auto;
     padding: 0;
 }
@@ -58,7 +50,6 @@ select {
     color: #000000;
 }
 
-/* 入力欄：Interフォントを明示的に適用 */
 .form__input--text input {
     width: 100%;
     height: 48px;
@@ -96,7 +87,6 @@ select {
     font-size: 16px;
 }
 
-/* 3. メール認証待ち画面 (Verify) - デザイン復元 */
 .verify-container {
     display: flex;
     justify-content: center;
@@ -152,9 +142,6 @@ select {
     cursor: pointer;
 }
 
-/* =============================================
-   レスポンシブ：タブレット (1024px以下)
-   ============================================= */
 @media screen and (max-width: 1024px) {
     .auth__content {
         width: 100%;

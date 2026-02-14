@@ -10,11 +10,11 @@
     {{ session('message') }}
 </div>
 @endif
+
 <div class="item-page">
     <div class="tab-container">
         <a href="{{ route('item.index', ['keyword' => $keyword]) }}"
             class="tab-item {{ $tab !== 'mylist' ? 'active' : '' }}">おすすめ</a>
-
         <a href="{{ route('item.index', ['tab' => 'mylist', 'keyword' => $keyword]) }}"
             class="tab-item {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
     </div>

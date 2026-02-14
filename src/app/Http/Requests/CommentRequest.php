@@ -7,21 +7,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentRequest extends FormRequest
 {
-    /**
-     *
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return Auth::check();
     }
 
-    /**
-     *
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -29,11 +19,6 @@ class CommentRequest extends FormRequest
         ];
     }
 
-    /**
-     *
-     *
-     * @return array
-     */
     public function messages()
     {
         return [

@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['content'];
+    use HasFactory;
+
+    protected $fillable = [
+        'content',
+    ];
+
     public function items()
     {
         return $this->belongsToMany(Item::class);

@@ -22,8 +22,8 @@
                 @php
                 $isMypage = Request::is('mypage*');
                 $searchAction = $isMypage ? '/mypage' : route('item.index');
-
                 $currentTab = request()->get('tab');
+
                 if (empty($currentTab)) {
                 $currentTab = $isMypage ? 'sell' : 'recommend';
                 }
@@ -31,7 +31,6 @@
 
                 <form action="{{ $searchAction }}" method="GET" id="search-form">
                     <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="何をお探しですか？">
-
                     <input type="hidden" name="tab" id="search-tab" value="{{ $currentTab }}">
                 </form>
                 @endif

@@ -10,6 +10,7 @@
     {{ session('message') }}
 </div>
 @endif
+
 <div class="purchase">
     <form action="{{ route('purchases.store', ['item_id' => $item->id]) }}" method="POST" id="purchase-form">
         @csrf
@@ -63,7 +64,6 @@
                         <span id="display-payment" class="summary-value"></span>
                     </div>
                 </div>
-
                 <button type="submit" class="purchase__btn">購入する</button>
             </div>
         </div>

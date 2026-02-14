@@ -7,7 +7,6 @@
 
 @section('content')
 <div class="item-page">
-
     <div class="mypage-user-section">
         <div class="user-info-container">
             <div class="user-image-wrapper">
@@ -70,10 +69,8 @@
         const tabBuy = document.getElementById('tab-buy');
         const sellItems = document.getElementById('sell-items');
         const buyItems = document.getElementById('buy-items');
-
         const searchForm = document.getElementById('search-form');
         const searchTabInput = document.getElementById('search-tab');
-
         const urlParams = new URLSearchParams(window.location.search);
         let activeTab = urlParams.get('tab') || 'sell';
 

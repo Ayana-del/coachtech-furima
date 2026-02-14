@@ -13,7 +13,6 @@
         </p>
 
         <div class="verify-action">
-            {{-- 直接 MailHog の Web UI を開くリンクに変更 --}}
             <a href="http://localhost:8025" target="_blank" class="btn-verify">
                 認証はこちらから
             </a>

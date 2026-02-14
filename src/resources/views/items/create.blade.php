@@ -16,7 +16,6 @@
         <form class="item-create__form" action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data" novalidate>
             @csrf
 
-            {{-- 商品画像 --}}
             <div class="item-create__group">
                 <div class="item-create__group-title">
                     <p>商品画像</p>

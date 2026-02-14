@@ -102,21 +102,16 @@ class ItemController extends Controller
             'comment' => $request->comment,
         ]);
 
-        // 保存後、詳細画面に戻る
         return back();
     }
     public function create()
     {
-        // 出品画面の選択肢として使用するデータを取得
         $categories = Category::all();
         $conditions = Condition::all();
 
         return view('items.create', compact('categories', 'conditions'));
     }
 
-    /**
-     * 商品出品処理
-     */
     public function store(ItemRequest $request)
     {
         $image_path = null;

@@ -9,6 +9,7 @@
     <div class="auth__heading">
         <h2>会員登録</h2>
     </div>
+
     <form class="form" action="{{ route('register') }}" method="post" novalidate>
         @csrf
         <div class="form__group">
@@ -26,6 +27,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form__group">
             <div class="form__group-title">
                 <span class="form__label--item">メールアドレス</span>
@@ -41,6 +43,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form__group">
             <div class="form__group-title">
                 <span class="form__label--item">パスワード</span>
@@ -51,7 +54,6 @@
                 </div>
                 <div class="form__error">
                     @error('password')
-                    {{-- 確認用との不一致エラー以外を表示 --}}
                     @if(str_contains($message, '一致') === false)
                     {{ $message }}
                     @endif
@@ -59,6 +61,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form__group">
             <div class="form__group-title">
                 <span class="form__label--item">確認用パスワード</span>
@@ -76,10 +79,12 @@
                 </div>
             </div>
         </div>
+
         <div class="form__button">
             <button class="form__button-submit" type="submit">登録する</button>
         </div>
     </form>
+
     <div class="auth__link">
         <a href="{{ route('login') }}" class="auth__link-item">ログインはこちら</a>
     </div>

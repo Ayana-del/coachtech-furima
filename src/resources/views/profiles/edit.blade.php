@@ -30,6 +30,7 @@
                     <img src="" alt="ユーザーアイコン" class="user-icon" id="preview-img" style="display: none;">
                     @endif
                 </div>
+
                 <label class="profile-image__label">
                     画像を選択する
                     <input type="file" name="image_url" class="profile-image__input" onchange="previewImage(this)">
@@ -42,13 +43,16 @@
                 </div>
                 @endif
             </div>
+
             <div class="form__error">
                 @error('image_url') {{ $message }} @enderror
             </div>
         </div>
 
         <div class="form__group">
-            <div class="form__group-title"><span class="form__label--item">ユーザー名</span></div>
+            <div class="form__group-title">
+                <span class="form__label--item">ユーザー名</span>
+            </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     <input type="text" name="name" value="{{ old('name', $user->name) }}">
@@ -60,7 +64,9 @@
         </div>
 
         <div class="form__group">
-            <div class="form__group-title"><span class="form__label--item">郵便番号</span></div>
+            <div class="form__group-title">
+                <span class="form__label--item">郵便番号</span>
+            </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     <input type="text" name="postcode" value="{{ old('postcode', $profile->postcode) }}">
@@ -72,7 +78,9 @@
         </div>
 
         <div class="form__group">
-            <div class="form__group-title"><span class="form__label--item">住所</span></div>
+            <div class="form__group-title">
+                <span class="form__label--item">住所</span>
+            </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     <input type="text" name="address" value="{{ old('address', $profile->address) }}">
@@ -84,7 +92,9 @@
         </div>
 
         <div class="form__group">
-            <div class="form__group-title"><span class="form__label--item">建物名</span></div>
+            <div class="form__group-title">
+                <span class="form__label--item">建物名</span>
+            </div>
             <div class="form__group-content">
                 <div class="form__input--text">
                     <input type="text" name="building" value="{{ old('building', $profile->building) }}">
@@ -97,11 +107,7 @@
 
         <div class="form__button">
             <button class="form__button-submit" type="submit">
-                @if (empty($profile->address))
-                設定完了
-                @else
-                更新する
-                @endif
+                {{ empty($profile->address) ? '設定完了' : '更新する' }}
             </button>
         </div>
     </form>
@@ -111,19 +117,16 @@
     function previewImage(input) {
         const previewImg = document.getElementById('preview-img');
         const previewDefault = document.getElementById('preview-default');
-
         const files = input.files;
+
         if (files && files.length > 0) {
-            const file = files[0];
             const reader = new FileReader();
             reader.onload = function(e) {
                 previewImg.src = e.target.result;
                 previewImg.style.display = 'block';
-                if (previewDefault) {
-                    previewDefault.style.display = 'none';
-                }
+                if (previewDefault) previewDefault.style.display = 'none';
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(files[0]);
         }
     }
 
@@ -134,9 +137,7 @@
 
         if (checkbox.checked) {
             previewImg.style.display = 'none';
-            if (previewDefault) {
-                previewDefault.style.display = 'flex';
-            }
+            if (previewDefault) previewDefault.style.display = 'flex';
             fileInput.value = "";
         }
     }

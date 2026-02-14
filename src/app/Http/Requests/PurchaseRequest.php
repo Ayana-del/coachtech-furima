@@ -16,7 +16,6 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'payment_method' => ['required'],
-
             'address_check' => [
                 function ($attribute, $value, $fail) {
                     $profile = Auth::user()->profile;

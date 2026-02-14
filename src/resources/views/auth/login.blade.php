@@ -9,6 +9,7 @@
     <div class="auth__heading">
         <h2>ログイン</h2>
     </div>
+
     <form class="form" action="/login" method="post" novalidate>
         @csrf
         <div class="form__group">
@@ -26,6 +27,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form__group">
             <div class="form__group-title">
                 <span class="form__label--item">パスワード</span>
@@ -41,10 +43,12 @@
                 </div>
             </div>
         </div>
+
         <div class="form__button">
             <button class="form__button-submit" type="submit">ログインする</button>
         </div>
     </form>
+
     <div class="auth__link">
         <a href="{{ route('register') }}" class="auth__link-item">会員登録はこちら</a>
     </div>

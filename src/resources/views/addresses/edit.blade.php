@@ -14,7 +14,7 @@
 
         <div class="form-group">
             <label for="postcode">郵便番号</label>
-            <input type="text" name="postcode" value=" {{ old('postcode') }}">
+            <input type="text" name="postcode" value="{{ old('postcode') }}">
             @error('postcode')
             <p class="error-message">{{ $message }}</p>
             @enderror
@@ -24,7 +24,7 @@
             <label for="address">住所</label>
             <input type="text" name="address" value="{{ old('address') }}">
             @error('address')
-            <p class=" error-message">{{ $message }}</p>
+            <p class="error-message">{{ $message }}</p>
             @enderror
         </div>
 
@@ -32,7 +32,7 @@
             <label for="building">建物名</label>
             <input type="text" name="building" value="{{ old('building') }}">
             @error('building')
-            <p class=" error-message">{{ $message }}</p>
+            <p class="error-message">{{ $message }}</p>
             @enderror
         </div>
 
