@@ -54,12 +54,44 @@ cd coachtech-furima
 ```bash
 cp src/.env.example src/.env
 ```
+①DBの設定
+以下のように設定されているか確認してください。
+```bash
+DB_CONNECTION=mysql  
+DB_HOST=mysql  
+DB_PORT=3306  
+DB_DATABASE=laravel_db  
+DB_USERNAME=laravel_user  
+DB_PASSWORD=laravel_pass  
+```  
   
+②今回のアプリでは「会員登録」や「購入」などの機能があるため、テストメールを確認するための設定が必要です。  
+```bash  
+MAIL_MAILER=smtp  
+MAIL_HOST=mailhog  
+MAIL_PORT=1025  
+MAIL_USERNAME=null  
+MAIL_PASSWORD=null  
+MAIL_ENCRYPTION=null  
+MAIL_FROM_ADDRESS=hello@example.com  
+MAIL_FROM_NAME="${APP_NAME}"  
+```  
+  
+③Stripeの設定
+Stripeのテストモードで発行したAPIキーを設定してください。  
+```bash  
+STRIPE_KEY=pk_test_××××××××××××××××××  
+```  
+  
+```bash
+STRIPE_SECRET=sk_test_×××××××××××××××××××  
+```
 ### 3.Docker コンテナの構築・起動
 
 ```bash
 docker-compose up -d --build
-```
+```  
+※ Windows環境（Docker Desktop）を使用している場合、ファイル実行権限の関係で storage ディレクトリの権限エラーが発生することがあります。その場合は「8. 環境構築後のログファイルへの書き込みエラー発生時」の手順を参照してください。
   
 ### 4.依存パッケージのインストールとキー生成
 ```bash  
@@ -165,7 +197,13 @@ php artisan db:seedによって生成されるサンプル商品データには�
   
 ・内容の生合成について:ランダム抽選による紐付けのため、「商品名とカテゴリーの内容が一致しない（例：食品に家電カテゴリーがつく等）」場合があります。これは、あくまでシステム上のバリデーションおよび表示確認を目的としたデータ生成仕様であり、不具合ではありません。  
   
-
+### 8.環境構築後のログファイルへの書き込みエラー発生時 
+"The stream or file could not be opened"エラーが発生した場合は、  
+Storageディレクトリにある権限を設定してください。  
+```bash
+chmod -R 777 storage  
+```  
+  
 ## テスト実行環境の構築  
 本プロジェクトでは、開発用データベースのデータを保護するため、テスト実行時に専用のデータベース（demo_test）を使用します。  
   
@@ -180,11 +218,11 @@ docker-compose exec mysql mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS dem
 .env.testing は機密情報保護のため Git 管理から除外されています。以下の手順で作成してください。  
   
 ```bash  
-cp .env .env.testing  
+cp src/.env src/.env.testing  
 ```  
   
 ```bash  
-php artisan key:generate --env=testing  
+docker-compose exec php php artisan key:generate --env=testing  
 ```  
   
 作成した .env.testing を開き、データベース接続先をテスト専用のものに書き換えます。  
@@ -203,13 +241,13 @@ DB_DATABASE=demo_test
 ### 3.テスト用マイグレーションの実行  
 テスト用データベースにテーブル構造を作成します。  
 ```bash  
-php artisan migrate --env=testing  
+docker-compose exec php php artisan migrate --env=testing  
 ```  
   
 ## テストの実行方法  
 以下のコマンドでテストを実行できます。  
 ```bash  
-php artisan test  
+docker-compose exec php php artisan test  
 ```  
   
 ## 開発・管理ツール  
@@ -219,7 +257,7 @@ php artisan test
 | ---- | ---- | ---- |  
 | アプリケーション本体 | http://localhost | 動作確認用メインページ |  
 | phpMyAdmin | http://localhost:8080 | データベース管理ツール |  
-| MailHog / Mailtrap | http://localhost:8025 | 送信メール確認用 |  
+| MailHog | http://localhost:8025 | 送信メール確認用 |  
 
 ■phpMyAdmin 接続情報  
 データベースの値を直接確認・変更する際は、以下の設定でログインしてください。  
